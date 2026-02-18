@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pitstop Turku | Burgers & Wok</title>
+    <meta
+      name="description"
+      content="Pitstop Turku menu website with English/Finnish/Swedish support, dark and light mode, focused food photos, map location, opening hours, and prices aligned to Pitstop's original menu."
+    />
+    <meta name="keywords" content="Pitstop Turku, burgers Turku, wok Turku, Pitstop menu, Aurakatu 3 B" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Pitstop Turku | Burgers & Wok" />
+    <meta
+      property="og:description"
+      content="Multilingual Pitstop Turku menu with focused food photos, map, opening hours, and original-menu-aligned pricing."
+    />
+    <meta property="og:image" content="https://imageproxy.wolt.com/assets/690dae5292a5029f7c93b197" />
+    <meta property="og:url" content="https://wolt.com/en/fin/turku/restaurant/ravintola-pitstop" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Pitstop Turku | Burgers & Wok" />
+    <meta
+      name="twitter:description"
+      content="Pitstop Turku menu in EN/FI/SV with focused food photos, opening hours, map, and original-menu-aligned pricing."
+    />
+    <meta name="twitter:image" content="https://imageproxy.wolt.com/assets/690dae5292a5029f7c93b197" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Rowdies:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Restaurant",
+        "name": "Ravintola Pitstop",
+        "image": ["https://imageproxy.wolt.com/assets/690dae5292a5029f7c93b197"],
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Aurakatu 3 B",
+          "addressLocality": "Turku",
+          "addressCountry": "FI"
+        },
+        "telephone": "+358453282140",
+        "servesCuisine": ["Burger", "Wok"],
+        "openingHours": [
+          "Mo 11:00-23:00",
+          "Tu 11:00-23:00",
+          "We 11:00-23:00",
+          "Th 11:00-23:00",
+          "Fr 11:00-03:00",
+          "Sa 11:00-03:00",
+          "Su 11:00-22:00"
+        ],
+        "sameAs": [
+          "https://wolt.com/en/fin/turku/restaurant/ravintola-pitstop",
+          "https://www.facebook.com/ravintolapitstop/",
+          "https://www.ravintolapitstop.com/"
+        ]
+      }
+    </script>
+  </head>
+  <body data-theme="dark">
+    <header class="site-header" id="top">
+      <a class="brand" href="#top" aria-label="Pitstop home">
+        <span class="brand-word">Ravintola Pitstop</span>
+      </a>
+
+      <div class="top-actions">
+        <div class="quick-links">
+          <a id="google-btn" class="quick-link" target="_blank" rel="noopener noreferrer">Google Reviews</a>
+          <a id="facebook-btn" class="quick-link" target="_blank" rel="noopener noreferrer">Facebook</a>
+          <a id="foodora-btn" class="quick-link foodora-link" target="_blank" rel="noopener noreferrer">Foodora</a>
+          <a id="wolt-btn" class="order-btn wolt-link" target="_blank" rel="noopener noreferrer">Order on Wolt</a>
+        </div>
+
+        <div class="controls">
+          <div class="lang-switch" role="group" aria-label="Language">
+            <button class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+            <button class="lang-btn" data-lang="fi" aria-pressed="false">FI</button>
+            <button class="lang-btn" data-lang="sv" aria-pressed="false">SV</button>
+          </div>
+
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle color theme">
+            <span class="theme-text">Light Mode</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="hero">
+        <div class="hero-overlay"></div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p id="hero-top" class="hero-top">TURKU • BURGERS & WOK</p>
+            <h1 id="restaurant-name">Ravintola Pitstop</h1>
+            <p id="restaurant-description" class="hero-lead">Wok and smashed burgers</p>
+            <p id="hero-extra" class="hero-extra">
+              Fresh wok heat, smashed burger comfort, and quick service in central Turku.
+            </p>
+
+            <div class="hero-metrics">
+              <div class="metric-box">
+                <span id="lbl-rating">Rating</span>
+                <strong id="rating">9.0</strong>
+              </div>
+              <div class="metric-box">
+                <span id="lbl-address">Address</span>
+                <strong id="address">Aurakatu 3 B</strong>
+              </div>
+              <div class="metric-box">
+                <span id="lbl-phone">Phone</span>
+                <strong id="phone">+358453282140</strong>
+              </div>
+            </div>
+          </div>
+
+          <aside class="hero-showcase" aria-label="Restaurant highlights">
+            <div class="hero-media-shell">
+              <video id="hero-slide-video" muted playsinline preload="metadata"></video>
+            </div>
+            <p id="hero-slide-caption"></p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="menu-panel">
+        <div class="panel-head">
+          <div>
+            <p id="menu-eyebrow" class="small-label">FULL PITSTOP MENU</p>
+            <h2 id="menu-title">Updated Prices, Pictures, and Descriptions</h2>
+          </div>
+          <p id="menu-stamp" class="stamp"></p>
+        </div>
+
+        <nav id="category-nav" class="category-nav" aria-label="Menu categories"></nav>
+        <div id="menu-sections"></div>
+      </section>
+
+      <section class="location-panel" id="location">
+        <div class="panel-head">
+          <div>
+            <p id="location-eyebrow" class="small-label">VISIT PITSTOP</p>
+            <h2 id="location-title">Location & Opening Hours</h2>
+          </div>
+          <p id="location-stamp" class="stamp"></p>
+        </div>
+
+        <div class="location-grid">
+          <article class="info-card location-card">
+            <h3 id="where-title">Where to Find Us</h3>
+            <p id="location-address-text"></p>
+            <p id="open-now" class="status-pill"></p>
+            <div class="link-row">
+              <a id="map-link" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
+              <a id="call-link" href="tel:+358453282140">Call Restaurant</a>
+            </div>
+          </article>
+
+          <article class="info-card hours-card">
+            <h3 id="hours-title">Opening Hours</h3>
+            <ul id="hours-list" class="hours-list"></ul>
+          </article>
+
+          <article class="info-card map-card">
+            <iframe
+              id="map-embed"
+              title="Pitstop Turku location"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </article>
+        </div>
+      </section>
+
+      <section class="info-grid">
+        <article class="info-card about-card">
+          <h3 id="about-title">About Pitstop</h3>
+          <p id="about-p1"></p>
+          <p id="about-p2"></p>
+          <p id="facebook-stats" class="tiny"></p>
+          <div class="link-row">
+            <a id="official-link" target="_blank" rel="noopener noreferrer">Official Website</a>
+            <a id="about-facebook-link" target="_blank" rel="noopener noreferrer">Facebook</a>
+          </div>
+        </article>
+
+        <article class="info-card reviews-card">
+          <div class="reviews-head">
+            <h3 id="reviews-title">Google Reviews</h3>
+            <p id="google-rating"></p>
+          </div>
+          <p id="reviews-note" class="tiny"></p>
+          <div id="reviews-list" class="reviews-list"></div>
+          <a id="google-link" target="_blank" rel="noopener noreferrer">See all Google reviews</a>
+        </article>
+      </section>
+
+      <section class="gallery-panel">
+        <div class="panel-head">
+          <div>
+            <p id="gallery-eyebrow" class="small-label">PITSTOP GALLERY</p>
+            <h2 id="gallery-title">Food Gallery</h2>
+          </div>
+        </div>
+        <div id="gallery-grid" class="gallery-grid"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p id="footer-text"></p>
+    </footer>
+
+    <template id="item-card-template">
+      <article class="item-card reveal">
+        <div class="item-image-wrap">
+          <img class="item-image" alt="" loading="lazy" />
+          <span class="price-pill"></span>
+        </div>
+        <div class="item-body">
+          <h4 class="item-name"></h4>
+          <p class="item-description"></p>
+        </div>
+      </article>
+    </template>
+
+    <template id="review-card-template">
+      <article class="review-card reveal">
+        <div class="review-top">
+          <h4 class="review-author"></h4>
+          <p class="review-meta"></p>
+        </div>
+        <p class="review-text"></p>
+      </article>
+    </template>
+
+    <div id="lightbox" class="lightbox" aria-hidden="true">
+      <button id="lightbox-close" class="lightbox-close" aria-label="Close gallery image">×</button>
+      <img id="lightbox-image" alt="Gallery image preview" />
+    </div>
+
+    <script src="data/pitstop-menu.js"></script>
+    <script src="data/site-content.js"></script>
+    <script src="app.js" defer></script>
+  </body>
+</html>
