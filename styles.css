@@ -282,15 +282,17 @@ main {
 }
 
 .hero-copy {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  align-items: stretch;
   gap: 10px;
+  min-height: 0;
 }
 
 .hero-copy-top-media {
-  width: min(100%, 312px);
-  aspect-ratio: 16 / 9;
+  width: 100%;
+  height: 100%;
+  min-height: 230px;
   border: 1px solid var(--line);
   border-radius: 12px;
   overflow: hidden;
@@ -1044,6 +1046,19 @@ main {
     grid-template-columns: 1fr;
   }
 
+  .hero-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .hero-copy-top-media {
+    width: min(100%, 320px);
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+    height: auto;
+  }
+
   .hero-showcase {
     padding: 7px;
   }
@@ -1123,6 +1138,9 @@ main {
 
   .hero-copy-top-media {
     width: min(100%, 250px);
+    aspect-ratio: 16 / 9;
+    height: auto;
+    min-height: 0;
   }
 
   .menu-panel .panel-head h2 {

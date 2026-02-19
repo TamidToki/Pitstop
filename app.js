@@ -548,8 +548,8 @@ function setHeroSlide(index) {
   const secondary = media[(state.heroSlideIndex + 1) % media.length];
   const tertiary = media[(state.heroSlideIndex + 2) % media.length];
   stopHeroVideos();
-  playHeroVideo(heroSlideVideoMain, secondary.src);
-  playHeroVideo(heroSlideVideoSecondary, primary.src);
+  playHeroVideo(heroSlideVideoMain, primary.src);
+  playHeroVideo(heroSlideVideoSecondary, secondary.src);
   playHeroVideo(heroSlideVideoTertiary, tertiary.src);
 
   // Fallback in case "ended" event is blocked.
