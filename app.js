@@ -250,7 +250,7 @@ const svDescReplacements = [
 
 const state = {
   lang: localStorage.getItem("pitstop_lang") || "en",
-  theme: localStorage.getItem("pitstop_theme") || "dark",
+  theme: localStorage.getItem("pitstop_theme") || "light",
   menu: null,
   content: null,
   heroSlideIndex: 0,
@@ -454,7 +454,8 @@ function updateStaticTexts() {
   document.documentElement.lang = state.lang;
 
   document.getElementById("google-btn").textContent = t.googleBtn;
-  document.getElementById("facebook-btn").textContent = t.facebookBtn;
+  document.getElementById("facebook-btn").textContent = "f";
+  document.getElementById("facebook-btn").setAttribute("aria-label", t.facebookBtn);
   document.getElementById("foodora-btn").textContent = t.foodoraBtn;
   document.getElementById("wolt-btn").textContent = t.woltBtn;
 
@@ -913,7 +914,7 @@ async function init() {
   }
 
   if (!["en", "fi", "sv"].includes(state.lang)) state.lang = "en";
-  if (!["dark", "light"].includes(state.theme)) state.theme = "dark";
+  if (!["dark", "light"].includes(state.theme)) state.theme = "light";
 
   bindLinks();
   attachEvents();

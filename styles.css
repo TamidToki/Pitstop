@@ -20,21 +20,29 @@ body[data-theme="dark"] {
   --brand: #f4efe3;
   --chip: rgba(34, 42, 52, 0.86);
   --hero-wash: linear-gradient(160deg, rgba(18, 21, 27, 0.58), rgba(17, 20, 26, 0.72));
+  background-image:
+    radial-gradient(circle at 88% -6%, rgba(255, 178, 61, 0.16), transparent 36%),
+    radial-gradient(circle at 4% 102%, rgba(90, 132, 176, 0.14), transparent 38%),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg) 88%, transparent), var(--bg));
 }
 
 body[data-theme="light"] {
-  --bg: #f5efe3;
-  --bg-soft: #ece1cf;
-  --panel: #fffdf8;
-  --card: #fffaf2;
-  --text: #262117;
-  --muted: #5d5344;
-  --line: rgba(91, 67, 38, 0.2);
-  --accent: #9a5e1f;
-  --accent-strong: #be7a2d;
-  --brand: #2f2418;
-  --chip: rgba(255, 250, 242, 0.9);
-  --hero-wash: linear-gradient(160deg, rgba(245, 236, 223, 0.62), rgba(255, 252, 245, 0.84));
+  --bg: #eadbc4;
+  --bg-soft: #dcc4a0;
+  --panel: #f7ecdc;
+  --card: #fbf2e3;
+  --text: #2a1e12;
+  --muted: #65513b;
+  --line: rgba(96, 70, 38, 0.2);
+  --accent: #8f5922;
+  --accent-strong: #b27633;
+  --brand: #2e2115;
+  --chip: rgba(250, 240, 224, 0.92);
+  --hero-wash: linear-gradient(160deg, rgba(235, 218, 194, 0.64), rgba(251, 244, 233, 0.82));
+  background-image:
+    radial-gradient(circle at 92% 2%, rgba(182, 128, 62, 0.22), transparent 40%),
+    radial-gradient(circle at 8% 100%, rgba(127, 83, 35, 0.14), transparent 42%),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg) 86%, transparent), var(--bg));
 }
 
 * {
@@ -51,10 +59,7 @@ body {
 }
 
 body {
-  background-image:
-    radial-gradient(circle at 90% 0%, rgba(236, 157, 70, 0.2), transparent 36%),
-    radial-gradient(circle at 8% 100%, rgba(56, 137, 229, 0.15), transparent 40%),
-    linear-gradient(180deg, color-mix(in srgb, var(--bg) 86%, transparent), var(--bg));
+  background-image: none;
 }
 
 .site-header {
@@ -62,9 +67,10 @@ body {
   top: 0;
   z-index: 80;
   display: flex;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
+  gap: 8px;
   padding: 10px clamp(10px, 2vw, 24px);
   border-bottom: 1px solid var(--line);
   background: color-mix(in srgb, var(--bg) 88%, transparent);
@@ -82,7 +88,7 @@ body {
 
 .brand-word {
   font-family: "Playfair Display", serif;
-  font-size: clamp(21px, 2.2vw, 31px);
+  font-size: clamp(19px, 2vw, 29px);
   letter-spacing: 0.01em;
   text-transform: none;
 }
@@ -91,23 +97,28 @@ body {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 6px;
   min-width: 0;
-  width: 100%;
+  width: auto;
+  flex: 1;
+  margin-left: auto;
+  flex-wrap: nowrap;
 }
 
 .quick-links {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   min-width: 0;
+  flex-wrap: nowrap;
 }
 
 .controls {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
+  gap: 7px;
   flex-shrink: 0;
+  flex-wrap: nowrap;
 }
 
 .lang-switch {
@@ -161,6 +172,21 @@ body {
   background: color-mix(in srgb, var(--bg-soft) 60%, transparent);
 }
 
+.icon-link {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  display: inline-grid;
+  place-items: center;
+}
+
+.facebook-icon {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  font-size: 18px;
+  text-transform: lowercase;
+}
+
 .order-btn {
   color: #1a140d;
   background: var(--accent);
@@ -192,7 +218,7 @@ main {
 
 .hero {
   position: relative;
-  min-height: 700px;
+  min-height: 560px;
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid var(--line);
@@ -211,10 +237,10 @@ main {
   z-index: 2;
   display: grid;
   grid-template-columns: 0.7fr 1.3fr;
-  gap: 16px;
+  gap: 14px;
   align-items: stretch;
   min-height: inherit;
-  padding: clamp(16px, 3.8vw, 44px);
+  padding: clamp(12px, 2.6vw, 24px);
 }
 
 .hero-copy {
@@ -223,12 +249,16 @@ main {
   justify-content: flex-end;
 }
 
-.hero-copy-image {
-  width: min(230px, 60%);
-  border-radius: 12px;
-  border: 1px solid var(--line);
-  margin-bottom: 10px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+.hero-signature {
+  position: absolute;
+  left: clamp(14px, 2.5vw, 30px);
+  top: clamp(12px, 2.2vw, 26px);
+  z-index: 3;
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(18px, 2vw, 28px);
+  color: color-mix(in srgb, var(--brand) 90%, white 10%);
+  letter-spacing: 0.01em;
 }
 
 .hero-top {
@@ -276,7 +306,7 @@ main {
 
 .hero-media-shell {
   position: relative;
-  width: clamp(280px, 34vw, 430px);
+  width: clamp(230px, 28vw, 320px);
   aspect-ratio: 9 / 16;
   height: auto;
   margin-left: auto;
@@ -290,7 +320,7 @@ main {
 #hero-slide-video {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center center;
   display: block;
 }
@@ -766,7 +796,7 @@ main {
 
 .order-popup {
   position: fixed;
-  right: 14px;
+  right: 66px;
   bottom: 14px;
   z-index: 120;
   width: min(340px, calc(100vw - 28px));
@@ -835,7 +865,7 @@ main {
 .back-to-top {
   position: fixed;
   right: 14px;
-  bottom: 128px;
+  bottom: 14px;
   z-index: 118;
   width: 42px;
   height: 42px;
@@ -907,16 +937,26 @@ main {
 }
 
 @media (max-width: 1180px) {
-  .top-actions {
-    overflow-x: auto;
-    scrollbar-width: thin;
-    padding-bottom: 2px;
+  .brand-word {
+    font-size: 26px;
+  }
+
+  .theme-toggle,
+  .quick-link,
+  .order-btn {
+    font-size: 11px;
+    padding: 7px 10px;
+  }
+
+  .lang-btn {
+    font-size: 11px;
+    padding: 7px 9px;
   }
 }
 
 @media (max-width: 1020px) {
   .hero {
-    min-height: 620px;
+    min-height: 560px;
   }
 
   .hero-grid {
@@ -936,7 +976,7 @@ main {
   }
 }
 
-@media (max-width: 860px) {
+@media (max-width: 780px) {
   .site-header {
     flex-direction: column;
     align-items: flex-start;
@@ -945,6 +985,7 @@ main {
   .top-actions {
     width: 100%;
     justify-content: flex-start;
+    flex-wrap: wrap;
   }
 
   .info-grid {
@@ -986,7 +1027,7 @@ main {
   }
 
   .hero {
-    min-height: 560px;
+    min-height: 500px;
   }
 
   .hero h1 {
@@ -994,9 +1035,14 @@ main {
   }
 
   .hero-media-shell {
-    width: min(100%, 360px);
+    width: min(100%, 330px);
     aspect-ratio: 9 / 16;
     height: auto;
+  }
+
+  .order-popup {
+    right: 12px;
+    bottom: 62px;
   }
 
   .popular-items {
