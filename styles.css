@@ -75,6 +75,12 @@ body[data-theme="light"] {
   box-sizing: border-box;
 }
 
+*,
+*::before,
+*::after {
+  border-radius: 0 !important;
+}
+
 html,
 body {
   margin: 0;
