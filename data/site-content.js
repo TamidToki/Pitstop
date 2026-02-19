@@ -24,7 +24,7 @@ window.__PITSTOP_SITE_CONTENT__ = {
     },
     {
       type: "video",
-      src: "Assets/BURGER VIDEO.mp4",
+      src: "Assets/burger-video.mp4",
       caption_en: "Smash burger close-up from the Pitstop grill.",
       caption_fi: "Smash-burgeri lahikuvassa Pitstopin grillilta.",
       caption_sv: "Narbild av smashburgare fran Pitstops grill."

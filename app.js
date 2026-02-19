@@ -561,7 +561,7 @@ function setHeroSlide() {
   if (!media || media.length === 0) return;
   state.heroSlideIndex = 0;
   const primary = media[0];
-  const secondary = media[2] || media[1] || primary;
+  const secondary = media[1] || media[2] || primary;
   const tertiary = media[1] || secondary;
   stopHeroVideos();
   playHeroVideo(heroSlideVideoMain, primary.src);
