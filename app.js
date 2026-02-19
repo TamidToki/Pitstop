@@ -28,6 +28,9 @@ function forceStartAtTop() {
   if ("scrollRestoration" in history) {
     history.scrollRestoration = "manual";
   }
+  if (window.location.hash) {
+    history.replaceState(null, "", window.location.pathname + window.location.search);
+  }
   window.scrollTo(0, 0);
   requestAnimationFrame(function () {
     window.scrollTo(0, 0);
@@ -955,9 +958,19 @@ function attachEvents() {
     langButtons[i].addEventListener("click", function () {
       const nextLang = this.dataset.lang;
       if (!nextLang || nextLang === state.lang) return;
+      const preservedScrollY = window.scrollY;
+      if (window.location.hash) {
+        history.replaceState(null, "", window.location.pathname + window.location.search);
+      }
+      if (document.activeElement && typeof document.activeElement.blur === "function") {
+        document.activeElement.blur();
+      }
       state.lang = nextLang;
       localStorage.setItem("pitstop_lang", state.lang);
       rerender();
+      requestAnimationFrame(function () {
+        window.scrollTo(0, preservedScrollY);
+      });
     });
   }
 
