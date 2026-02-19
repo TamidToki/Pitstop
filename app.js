@@ -570,9 +570,8 @@ function setHeroSlide() {
   const media = state.content.hero_media;
   if (!media || media.length === 0) return;
   state.heroSlideIndex = 0;
-  const isMobileHero = window.matchMedia("(max-width: 1020px)").matches;
   const primary = media[0];
-  const secondary = isMobileHero ? media[2] || media[1] || primary : media[1] || media[2] || primary;
+  const secondary = media[1] || media[2] || primary;
   const tertiary = media[2] || media[1] || secondary;
   stopHeroVideos();
   playHeroVideo(heroSlideVideoMain, primary.src);
@@ -857,7 +856,7 @@ function renderPopularItems(categories) {
     "BBQ Single Smash",
     "Chicken Wok",
     "Beef Wok",
-    "OG Chicken",
+    "Loaded fries",
     "Wrap"
   ];
 
