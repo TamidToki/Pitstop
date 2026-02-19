@@ -667,12 +667,14 @@ function showOrderPopup() {
   if (state.orderPopupDismissed || orderPopup.classList.contains("open")) return;
   orderPopup.classList.add("open");
   orderPopup.setAttribute("aria-hidden", "false");
+  syncBackToTopWithPopup();
 }
 
 function closeOrderPopup(trackDismiss) {
   if (!orderPopup.classList.contains("open")) return;
   orderPopup.classList.remove("open");
   orderPopup.setAttribute("aria-hidden", "true");
+  syncBackToTopWithPopup();
   if (trackDismiss) {
     state.orderPopupCloseCount += 1;
     if (state.orderPopupCloseCount >= 2) {
@@ -703,6 +705,11 @@ function initOrderPopupTrigger() {
   }
   window.addEventListener("scroll", onScrollCheck, { passive: true });
   onScrollCheck();
+}
+
+function syncBackToTopWithPopup() {
+  if (!backToTopBtn || !orderPopup) return;
+  backToTopBtn.classList.toggle("shift-left", orderPopup.classList.contains("open"));
 }
 
 function renderMenu() {
@@ -789,6 +796,7 @@ function toggleBackToTop() {
   if (!backToTopBtn) return;
   const shouldShow = window.scrollY > 420;
   backToTopBtn.classList.toggle("show", shouldShow);
+  syncBackToTopWithPopup();
 }
 
 function buildCategoryNav(categories) {
