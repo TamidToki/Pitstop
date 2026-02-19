@@ -31,7 +31,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Rowdies:wght@300;400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600;700&family=Rowdies:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -128,7 +128,6 @@
             <div class="hero-media-shell">
               <video id="hero-slide-video" muted playsinline preload="metadata"></video>
             </div>
-            <p id="hero-slide-caption"></p>
           </aside>
         </div>
       </section>
@@ -164,20 +163,17 @@
               <a id="map-link" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
               <a id="call-link" href="tel:+358453282140">Call Restaurant</a>
             </div>
-          </article>
-
-          <article class="info-card hours-card">
-            <h3 id="hours-title">Opening Hours</h3>
-            <ul id="hours-list" class="hours-list"></ul>
-          </article>
-
-          <article class="info-card map-card">
             <iframe
               id="map-embed"
               title="Pitstop Turku location"
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"
             ></iframe>
+          </article>
+
+          <article class="info-card hours-card">
+            <h3 id="hours-title">Opening Hours</h3>
+            <ul id="hours-list" class="hours-list"></ul>
           </article>
         </div>
       </section>
@@ -189,8 +185,7 @@
           <p id="about-p2"></p>
           <p id="facebook-stats" class="tiny"></p>
           <div class="link-row">
-            <a id="official-link" target="_blank" rel="noopener noreferrer">Official Website</a>
-            <a id="about-facebook-link" target="_blank" rel="noopener noreferrer">Facebook</a>
+            <a id="about-facebook-link" target="_blank" rel="noopener noreferrer">ⓕ Pitstop Ravintola</a>
           </div>
         </article>
 
@@ -246,6 +241,19 @@
     <div id="lightbox" class="lightbox" aria-hidden="true">
       <button id="lightbox-close" class="lightbox-close" aria-label="Close gallery image">×</button>
       <img id="lightbox-image" alt="Gallery image preview" />
+    </div>
+
+    <div id="order-popup" class="order-popup" aria-hidden="true">
+      <button id="order-popup-close" class="order-popup-close" aria-label="Close order popup">×</button>
+      <img
+        id="order-popup-image"
+        src="https://imageproxy.wolt.com/assets/692451135898eec529a3994f"
+        alt="Pitstop burger"
+        loading="lazy"
+      />
+      <h3 id="order-popup-title">Order on Wolt</h3>
+      <p id="order-popup-text">Get Pitstop burgers and wok delivered fast.</p>
+      <a id="order-popup-link" class="wolt-link popup-link" target="_blank" rel="noopener noreferrer">Order now</a>
     </div>
 
     <script src="data/pitstop-menu.js"></script>

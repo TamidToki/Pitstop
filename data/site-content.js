@@ -3,7 +3,7 @@ window.__PITSTOP_SITE_CONTENT__ = {
     official_site: "https://www.ravintolapitstop.com/",
     facebook: "https://www.facebook.com/ravintolapitstop/",
     wolt: "https://wolt.com/en/fin/turku/restaurant/ravintola-pitstop",
-    foodora: "https://www.foodora.fi/restaurant/lffv/pitstop-turku",
+    foodora: "https://www.foodora.fi/en/restaurant/lffv/pitstop-turku",
     google_reviews_map: "https://maps.google.com/?q=60.4500427,22.2681028",
     google_snippet_index: "https://top-rated.online/cities/Turku/place/p/29006148/Pitstop+Turku"
   },
@@ -32,13 +32,11 @@ window.__PITSTOP_SITE_CONTENT__ = {
   ],
   gallery_images: [
     "Assets/515442093_122113047429006421_7740685187538486109_n.jpg",
-    "Assets/540975487_122096220711006421_2584087805013933229_n.jpg",
-    "Assets/545846641_122103881145006421_2369625063782544829_n.jpg",
     "Assets/548018951_122103881223006421_1737596936271651022_n.jpg",
     "Assets/548359682_122103880197006421_3443645145392154988_n.jpg",
     "Assets/557529263_122113047465006421_269115875181778398_n.jpg",
-    "Assets/557881353_122110174641006421_8973102389072605117_n.jpg",
-    "Assets/558963027_122110238223006421_8908147207116748092_n.jpg"
+    "Assets/558963027_122110238223006421_8908147207116748092_n.jpg",
+    "Assets/540975487_122096220711006421_2584087805013933229_n.jpg"
   ],
   location: {
     address_line_1: "Aurakatu 3 B",

@@ -3,11 +3,14 @@ const navRoot = document.getElementById("category-nav");
 const hero = document.getElementById("hero");
 const heroMediaShell = document.querySelector(".hero-media-shell");
 const heroSlideVideo = document.getElementById("hero-slide-video");
-const heroSlideCaption = document.getElementById("hero-slide-caption");
 const galleryGrid = document.getElementById("gallery-grid");
 const lightbox = document.getElementById("lightbox");
 const lightboxImage = document.getElementById("lightbox-image");
 const lightboxClose = document.getElementById("lightbox-close");
+const menuPanel = document.querySelector(".menu-panel");
+const orderPopup = document.getElementById("order-popup");
+const orderPopupClose = document.getElementById("order-popup-close");
+const orderPopupLink = document.getElementById("order-popup-link");
 
 const langButtons = Array.from(document.querySelectorAll(".lang-btn"));
 const themeToggle = document.getElementById("theme-toggle");
@@ -51,10 +54,12 @@ const ui = {
     hoursTitle: "Opening Hours",
     mapLink: "Open in Google Maps",
     callLink: "Call Restaurant",
-    official: "Official Website",
-    aboutFacebook: "Facebook",
+    aboutFacebook: "ⓕ Pitstop Ravintola",
     reviewsTitle: "Google Reviews",
     reviewsLink: "See all Google reviews",
+    popupTitle: "Order on Wolt",
+    popupText: "Get Pitstop burgers and wok delivered fast.",
+    popupBtn: "Order now",
     openNow: "Open now",
     closedNow: "Closed now",
     until: "until",
@@ -85,10 +90,12 @@ const ui = {
     hoursTitle: "Aukioloajat",
     mapLink: "Avaa Google Mapsissa",
     callLink: "Soita ravintolaan",
-    official: "Virallinen sivusto",
-    aboutFacebook: "Facebook",
+    aboutFacebook: "ⓕ Pitstop Ravintola",
     reviewsTitle: "Google-arvostelut",
     reviewsLink: "Katso kaikki Google-arvostelut",
+    popupTitle: "Tilaa Woltista",
+    popupText: "Tilaa Pitstopin burgerit ja wokit nopeasti kotiin.",
+    popupBtn: "Tilaa nyt",
     openNow: "Avoinna nyt",
     closedNow: "Suljettu nyt",
     until: "asti",
@@ -119,10 +126,12 @@ const ui = {
     hoursTitle: "Oppettider",
     mapLink: "Oppna i Google Maps",
     callLink: "Ring restaurangen",
-    official: "Officiell webbplats",
-    aboutFacebook: "Facebook",
+    aboutFacebook: "ⓕ Pitstop Ravintola",
     reviewsTitle: "Google-recensioner",
     reviewsLink: "Se alla Google-recensioner",
+    popupTitle: "Bestall via Wolt",
+    popupText: "Bestall Pitstops burgare och wok snabbt hem.",
+    popupBtn: "Bestall nu",
     openNow: "Oppet nu",
     closedNow: "Stangt nu",
     until: "till",
@@ -247,7 +256,8 @@ const state = {
   content: null,
   heroSlideIndex: 0,
   statusTimer: null,
-  heroFallbackTimeout: null
+  heroFallbackTimeout: null,
+  orderPopupShown: false
 };
 
 function escapeRegExp(text) {
@@ -431,10 +441,10 @@ function bindLinks() {
   document.getElementById("foodora-btn").href = sources.foodora;
   document.getElementById("wolt-btn").href = sources.wolt;
 
-  document.getElementById("official-link").href = sources.official_site;
   document.getElementById("about-facebook-link").href = sources.facebook;
   document.getElementById("google-link").href = sources.google_reviews_map;
   document.getElementById("map-link").href = sources.google_reviews_map;
+  orderPopupLink.href = sources.wolt;
 
   const phone = state.menu && state.menu.restaurant ? state.menu.restaurant.phone : "+358453282140";
   document.getElementById("call-link").href = "tel:" + phone;
@@ -468,10 +478,12 @@ function updateStaticTexts() {
   document.getElementById("map-link").textContent = t.mapLink;
   document.getElementById("call-link").textContent = t.callLink;
 
-  document.getElementById("official-link").textContent = t.official;
   document.getElementById("about-facebook-link").textContent = t.aboutFacebook;
   document.getElementById("reviews-title").textContent = t.reviewsTitle;
   document.getElementById("google-link").textContent = t.reviewsLink;
+  document.getElementById("order-popup-title").textContent = t.popupTitle;
+  document.getElementById("order-popup-text").textContent = t.popupText;
+  document.getElementById("order-popup-link").textContent = t.popupBtn;
   document.getElementById("footer-text").textContent = t.footer;
 
   themeText.textContent = state.theme === "dark" ? t.lightMode : t.darkMode;
@@ -482,12 +494,6 @@ function updateStaticTexts() {
     btn.classList.toggle("active", isActive);
     btn.setAttribute("aria-pressed", isActive ? "true" : "false");
   }
-}
-
-function getHeroCaption(item) {
-  if (state.lang === "fi") return item.caption_fi;
-  if (state.lang === "sv") return item.caption_sv;
-  return item.caption_en;
 }
 
 function stopHeroVideo() {
@@ -503,8 +509,6 @@ function setHeroSlide(index) {
   if (!media || media.length === 0) return;
   state.heroSlideIndex = (index + media.length) % media.length;
   const item = media[state.heroSlideIndex];
-
-  heroSlideCaption.textContent = getHeroCaption(item);
   heroMediaShell.classList.add("is-video");
   stopHeroVideo();
   heroSlideVideo.currentTime = 0;
@@ -630,6 +634,30 @@ function startStatusClock() {
   }, 60000);
 }
 
+function showOrderPopup() {
+  if (state.orderPopupShown) return;
+  state.orderPopupShown = true;
+  orderPopup.classList.add("open");
+  orderPopup.setAttribute("aria-hidden", "false");
+}
+
+function initOrderPopupTrigger() {
+  if (!menuPanel) return;
+  const observer = new IntersectionObserver(
+    function (entries) {
+      for (let i = 0; i < entries.length; i += 1) {
+        const entry = entries[i];
+        if (entry.isIntersecting && window.scrollY > 120) {
+          showOrderPopup();
+          observer.unobserve(menuPanel);
+        }
+      }
+    },
+    { threshold: 0.36 }
+  );
+  observer.observe(menuPanel);
+}
+
 function buildCategoryNav(categories) {
   navRoot.innerHTML = "";
   for (let i = 0; i < categories.length; i += 1) {
@@ -705,7 +733,10 @@ function renderMenu() {
       const displayPrice = getOriginalPriceOverride(item.name, category.name, item.price);
       price.textContent = formatPrice(displayPrice, state.lang);
 
-      const imageUrl = item.image || item.fallback_image || category.image || restaurant.hero_image;
+      let imageUrl = item.image || item.fallback_image || category.image || restaurant.hero_image;
+      if (normalizeText(category.name).includes("combo")) {
+        imageUrl = item.image || item.fallback_image || "Assets/515442093_122113047429006421_7740685187538486109_n.jpg";
+      }
       if (imageUrl) {
         image.src = imageUrl;
         image.alt = item.name;
@@ -796,6 +827,18 @@ function attachEvents() {
       lightbox.setAttribute("aria-hidden", "true");
     }
   });
+
+  orderPopupClose.addEventListener("click", function () {
+    orderPopup.classList.remove("open");
+    orderPopup.setAttribute("aria-hidden", "true");
+  });
+
+  orderPopup.addEventListener("click", function (event) {
+    if (event.target === orderPopup) {
+      orderPopup.classList.remove("open");
+      orderPopup.setAttribute("aria-hidden", "true");
+    }
+  });
 }
 
 async function init() {
@@ -817,6 +860,7 @@ async function init() {
   rerender();
   startHeroSlideshow();
   startStatusClock();
+  initOrderPopupTrigger();
 }
 
 init();
