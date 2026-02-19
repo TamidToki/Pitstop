@@ -104,8 +104,8 @@ window.__PITSTOP_SITE_CONTENT__ = {
         text_sv: "Nötkottet och pommesen var mycket goda och servicen var trevlig."
       }
     ],
-    note_en: "Google review snippets shown from a public index snapshot.",
-    note_fi: "Google-arvostelujen otteet naytetaan julkisesta koontinakyvasta.",
-    note_sv: "Google-recensionsutdrag visas fran en offentlig sammanstallning."
+    note_en: "",
+    note_fi: "",
+    note_sv: ""
   }
 };

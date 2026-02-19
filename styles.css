@@ -6,7 +6,7 @@
   --shadow-md: 0 14px 35px rgba(0, 0, 0, 0.2);
   --ease: 0.28s ease;
   --order-popup-right: 10px;
-  --order-popup-width: 170px;
+  --order-popup-width: 220px;
 }
 
 body[data-theme="dark"] {
@@ -327,17 +327,26 @@ main {
 }
 
 .hero-copy-spacer {
-  min-height: clamp(170px, 20vw, 280px);
-  display: flex;
-  align-items: center;
+  min-height: clamp(180px, 22vw, 300px);
+  display: grid;
+  grid-template-columns: minmax(118px, 0.38fr) minmax(0, 0.62fr);
+  align-items: stretch;
+  gap: 10px;
 }
 
 .hero-brand-logo {
-  width: clamp(210px, 28vw, 360px);
+  width: min(100%, clamp(124px, 16vw, 190px));
   height: auto;
   object-fit: contain;
   opacity: 0.98;
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.18));
+  align-self: center;
+}
+
+.hero-spacer-video {
+  align-self: stretch;
+  min-height: clamp(176px, 19vw, 270px);
+  aspect-ratio: 1 / 1;
 }
 
 .hero-mobile-logo {
@@ -544,18 +553,28 @@ main {
 
 .popular-items {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 12px;
 }
 
 .popular-card {
   border: 1px solid var(--line);
-  border-radius: 11px;
   overflow: hidden;
-  background: color-mix(in srgb, var(--card) 88%, transparent);
-  display: grid;
-  grid-template-rows: 120px minmax(86px, auto);
+  background: var(--card);
+  transition: transform var(--ease), border-color var(--ease);
   position: relative;
+}
+
+.popular-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--accent) 58%, var(--line));
+}
+
+.popular-image-wrap {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--bg-soft);
 }
 
 .popular-card img {
@@ -564,39 +583,37 @@ main {
   object-fit: cover;
   object-position: center;
   display: block;
-  transform: scale(1.74);
+  transform: scale(1.52);
   transition: transform var(--ease);
+}
+
+.popular-card:hover img {
+  transform: scale(1.8);
+}
+
+.popular-body {
+  padding: 11px;
+  min-height: 108px;
+  background: var(--card);
   position: relative;
   z-index: 1;
 }
 
-.popular-card:hover img {
-  transform: scale(2.3);
-}
-
-.popular-body {
-  padding: 10px 8px 10px;
-  min-height: 68px;
-  background: color-mix(in srgb, var(--card) 96%, transparent);
-  position: relative;
-  z-index: 3;
-}
-
 .popular-body h4 {
-  margin: 0 0 6px;
-  font-size: 11px;
-  line-height: 1.25;
+  margin: 0 0 7px;
+  font-family: "Rowdies", sans-serif;
+  text-transform: uppercase;
+  font-size: 21px;
+  line-height: 1.02;
   color: var(--text);
-  white-space: normal;
-  overflow: visible;
-  min-height: 0;
+  overflow-wrap: anywhere;
 }
 
 .popular-body p {
   margin: 0;
   color: var(--accent);
   font-weight: 700;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .category-link {
@@ -932,9 +949,10 @@ main {
   right: var(--order-popup-right);
   bottom: 14px;
   z-index: 120;
+  min-width: 188px;
   width: fit-content;
   max-width: min(var(--order-popup-width), calc(100vw - 28px));
-  padding: 8px;
+  padding: 9px;
   border-radius: 14px;
   border: 1px solid var(--line);
   background: color-mix(in srgb, var(--panel) 94%, #000 6%);
@@ -949,7 +967,7 @@ main {
 #order-popup-title {
   margin: 2px 0 6px;
   font-family: "Rowdies", sans-serif;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 #order-popup-text {
@@ -978,8 +996,8 @@ main {
   display: block;
   width: 100%;
   text-align: center;
-  font-size: 11px;
-  padding: 6px 8px;
+  font-size: 12px;
+  padding: 7px 8px;
   margin-top: 2px;
 }
 
@@ -1151,7 +1169,7 @@ main {
   }
 
   .popular-items {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
 }
 
@@ -1328,7 +1346,7 @@ main {
   }
 
   .popular-items {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
 
   .item-name {

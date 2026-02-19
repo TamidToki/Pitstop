@@ -53,7 +53,7 @@ const ui = {
     galleryTitle: "Pitstop Food Gallery",
     locationEyebrow: "VISIT PITSTOP",
     locationTitle: "Location & Opening Hours",
-    locationStamp: "Hours source: Wolt listing",
+    locationStamp: "",
     whereTitle: "Where to Find Us",
     hoursTitle: "Opening Hours",
     mapLink: "Open in Google Maps",
@@ -90,7 +90,7 @@ const ui = {
     galleryTitle: "Pitstop Food Gallery",
     locationEyebrow: "VIERAILE PITSTOPISSA",
     locationTitle: "Sijainti ja aukioloajat",
-    locationStamp: "Aukioloajat lahteesta: Wolt",
+    locationStamp: "",
     whereTitle: "Loydat meidat tasta",
     hoursTitle: "Aukioloajat",
     mapLink: "Avaa Google Mapsissa",
@@ -127,7 +127,7 @@ const ui = {
     galleryTitle: "Pitstop Food Gallery",
     locationEyebrow: "BESOK PITSTOP",
     locationTitle: "Plats och oppettider",
-    locationStamp: "Oppettider fran: Wolt",
+    locationStamp: "",
     whereTitle: "Hitta oss",
     hoursTitle: "Oppettider",
     mapLink: "Oppna i Google Maps",
@@ -492,7 +492,9 @@ function updateStaticTexts() {
 
   document.getElementById("location-eyebrow").textContent = t.locationEyebrow;
   document.getElementById("location-title").textContent = t.locationTitle;
-  document.getElementById("location-stamp").textContent = t.locationStamp;
+  const locationStampNode = document.getElementById("location-stamp");
+  locationStampNode.textContent = t.locationStamp;
+  locationStampNode.style.display = t.locationStamp ? "block" : "none";
   document.getElementById("where-title").textContent = t.whereTitle;
   document.getElementById("hours-title").textContent = t.hoursTitle;
   document.getElementById("map-link").textContent = t.mapLink;
@@ -568,7 +570,7 @@ function setHeroSlide() {
   state.heroSlideIndex = 0;
   const primary = media[0];
   const secondary = media[1] || media[2] || primary;
-  const tertiary = media[1] || secondary;
+  const tertiary = media[2] || media[1] || secondary;
   stopHeroVideos();
   playHeroVideo(heroSlideVideoMain, primary.src);
   playHeroVideo(heroSlideVideoSecondary, secondary.src);
@@ -592,12 +594,15 @@ function renderAboutAndReviews() {
   document.getElementById("google-rating").textContent =
     reviewsBlock.rating.toFixed(1) + " / 5 (" + reviewsBlock.count + ")";
 
-  document.getElementById("reviews-note").textContent =
+  const reviewsNoteNode = document.getElementById("reviews-note");
+  const reviewsNoteText =
     state.lang === "fi"
       ? reviewsBlock.note_fi
       : state.lang === "sv"
         ? reviewsBlock.note_sv
         : reviewsBlock.note_en;
+  reviewsNoteNode.textContent = reviewsNoteText;
+  reviewsNoteNode.style.display = reviewsNoteText ? "block" : "none";
 
   const reviewsRoot = document.getElementById("reviews-list");
   const template = document.getElementById("review-card-template");
@@ -869,6 +874,10 @@ function renderPopularItems(categories) {
     img.loading = "lazy";
     img.decoding = "async";
 
+    const imgWrap = document.createElement("div");
+    imgWrap.className = "popular-image-wrap";
+    imgWrap.appendChild(img);
+
     const body = document.createElement("div");
     body.className = "popular-body";
     const h4 = document.createElement("h4");
@@ -880,7 +889,7 @@ function renderPopularItems(categories) {
 
     body.appendChild(h4);
     body.appendChild(p);
-    card.appendChild(img);
+    card.appendChild(imgWrap);
     card.appendChild(body);
     popularItemsRoot.appendChild(card);
   }
