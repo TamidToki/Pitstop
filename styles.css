@@ -116,8 +116,8 @@ body {
   gap: 5px;
   padding: 4px;
   border-radius: var(--radius-pill);
-  border: 1px solid var(--line);
-  background: color-mix(in srgb, var(--panel) 88%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--line));
+  background: color-mix(in srgb, var(--panel) 82%, #10141a 18%);
 }
 
 .lang-btn {
@@ -127,14 +127,14 @@ body {
   min-width: 36px;
   font-size: 12px;
   font-weight: 700;
-  color: var(--text);
+  color: color-mix(in srgb, var(--text) 82%, var(--muted));
   background: transparent;
   cursor: pointer;
 }
 
 .lang-btn.active {
-  background: var(--accent);
-  color: #120f0a;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #191105;
 }
 
 .theme-toggle,
@@ -223,6 +223,14 @@ main {
   justify-content: flex-end;
 }
 
+.hero-copy-image {
+  width: min(230px, 60%);
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  margin-bottom: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
 .hero-top {
   margin: 0;
   color: var(--accent);
@@ -262,17 +270,21 @@ main {
   gap: 0;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: color-mix(in srgb, var(--chip) 88%, transparent);
+  background: color-mix(in srgb, var(--chip) 30%, transparent);
   padding: 8px;
 }
 
 .hero-media-shell {
   position: relative;
-  width: 100%;
-  height: clamp(430px, 57vw, 690px);
+  width: clamp(280px, 34vw, 430px);
+  aspect-ratio: 9 / 16;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
   border-radius: 12px;
   overflow: hidden;
-  background: #000;
+  background: transparent;
+  border: 1px solid var(--line);
 }
 
 #hero-slide-video {
@@ -327,6 +339,11 @@ main {
   padding: clamp(14px, 2.3vw, 24px);
 }
 
+.menu-panel .panel-head {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
 .location-panel,
 .gallery-panel,
 .info-card {
@@ -374,6 +391,54 @@ main {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+}
+
+.popular-strip {
+  margin: 8px 0 14px;
+}
+
+.popular-strip h3 {
+  margin: 0 0 8px;
+  font-family: "Rowdies", sans-serif;
+  font-size: 21px;
+  text-transform: uppercase;
+}
+
+.popular-items {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.popular-card {
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--card) 88%, transparent);
+}
+
+.popular-card img {
+  width: 100%;
+  height: 115px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.popular-body {
+  padding: 8px;
+}
+
+.popular-body h4 {
+  margin: 0 0 4px;
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.popular-body p {
+  margin: 0;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 12px;
 }
 
 .category-link {
@@ -502,6 +567,17 @@ main {
 .location-card,
 .hours-card {
   padding: 16px;
+}
+
+.location-card p,
+.hours-item,
+.hours-item strong {
+  font-size: 12px;
+}
+
+.hours-card h3,
+.location-card h3 {
+  font-size: 24px;
 }
 
 #map-embed {
@@ -706,11 +782,18 @@ main {
   display: block;
 }
 
-#order-popup-image {
+.order-popup-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+#order-popup-burger,
+#order-popup-wok {
   width: 100%;
-  height: 160px;
+  height: 112px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 8px;
   border: 1px solid var(--line);
 }
 
@@ -729,6 +812,9 @@ main {
 .popup-link {
   display: inline-flex;
   align-items: center;
+  font-size: 14px;
+  padding: 10px 14px;
+  margin-top: 2px;
 }
 
 .order-popup-close {
@@ -744,6 +830,27 @@ main {
   font-size: 19px;
   line-height: 1;
   cursor: pointer;
+}
+
+.back-to-top {
+  position: fixed;
+  right: 14px;
+  bottom: 128px;
+  z-index: 118;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--panel) 90%, transparent);
+  color: var(--text);
+  font-size: 20px;
+  cursor: pointer;
+  display: none;
+}
+
+.back-to-top.show {
+  display: inline-grid;
+  place-items: center;
 }
 
 .review-card {
@@ -823,6 +930,10 @@ main {
   .gallery-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .popular-items {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 860px) {
@@ -883,7 +994,13 @@ main {
   }
 
   .hero-media-shell {
-    height: 420px;
+    width: min(100%, 360px);
+    aspect-ratio: 9 / 16;
+    height: auto;
+  }
+
+  .popular-items {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .item-name {

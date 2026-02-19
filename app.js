@@ -11,6 +11,8 @@ const menuPanel = document.querySelector(".menu-panel");
 const orderPopup = document.getElementById("order-popup");
 const orderPopupClose = document.getElementById("order-popup-close");
 const orderPopupLink = document.getElementById("order-popup-link");
+const popularItemsRoot = document.getElementById("popular-items");
+const backToTopBtn = document.getElementById("back-to-top");
 
 const langButtons = Array.from(document.querySelectorAll(".lang-btn"));
 const themeToggle = document.getElementById("theme-toggle");
@@ -41,10 +43,9 @@ const ui = {
     rating: "Rating",
     address: "Address",
     phone: "Phone",
-    menuEyebrow: "FULL PITSTOP MENU",
-    menuTitle: "Original Menu Prices + Full Wolt Photos",
-    updatedPrefix: "Prices aligned to Pitstop original menu • Updated",
+    menuTitle: "Ravintola Pitstop Menu Prices with Pictures",
     items: "items",
+    popularTitle: "Popular Items",
     galleryEyebrow: "PITSTOP GALLERY",
     galleryTitle: "Food Gallery",
     locationEyebrow: "VISIT PITSTOP",
@@ -58,7 +59,7 @@ const ui = {
     reviewsTitle: "Google Reviews",
     reviewsLink: "See all Google reviews",
     popupTitle: "Order on Wolt",
-    popupText: "Get Pitstop burgers and wok delivered fast.",
+    popupText: "Ravintola Pitstop • burgers and wok delivered fast.",
     popupBtn: "Order now",
     openNow: "Open now",
     closedNow: "Closed now",
@@ -77,10 +78,9 @@ const ui = {
     rating: "Arvosana",
     address: "Osoite",
     phone: "Puhelin",
-    menuEyebrow: "PITSTOPIN KOKO MENU",
-    menuTitle: "Alkuperaiset hinnat + kaikki Wolt-kuvat",
-    updatedPrefix: "Hinnat alkuperaisen menun mukaan • Paivitetty",
+    menuTitle: "Ravintola Pitstopin hinnat ja kuvat",
     items: "tuotetta",
+    popularTitle: "Suositut annokset",
     galleryEyebrow: "PITSTOP GALLERIA",
     galleryTitle: "Ruokagalleria",
     locationEyebrow: "VIERAILE PITSTOPISSA",
@@ -94,7 +94,7 @@ const ui = {
     reviewsTitle: "Google-arvostelut",
     reviewsLink: "Katso kaikki Google-arvostelut",
     popupTitle: "Tilaa Woltista",
-    popupText: "Tilaa Pitstopin burgerit ja wokit nopeasti kotiin.",
+    popupText: "Ravintola Pitstop • burgerit ja wokit nopeasti kotiin.",
     popupBtn: "Tilaa nyt",
     openNow: "Avoinna nyt",
     closedNow: "Suljettu nyt",
@@ -113,10 +113,9 @@ const ui = {
     rating: "Betyg",
     address: "Adress",
     phone: "Telefon",
-    menuEyebrow: "PITSTOPS HELA MENY",
-    menuTitle: "Originalpriser + alla Wolt-bilder",
-    updatedPrefix: "Priser enligt originalmeny • Uppdaterad",
+    menuTitle: "Ravintola Pitstop menyer och bilder",
     items: "artiklar",
+    popularTitle: "Populart",
     galleryEyebrow: "PITSTOP GALLERI",
     galleryTitle: "Matgalleri",
     locationEyebrow: "BESOK PITSTOP",
@@ -130,7 +129,7 @@ const ui = {
     reviewsTitle: "Google-recensioner",
     reviewsLink: "Se alla Google-recensioner",
     popupTitle: "Bestall via Wolt",
-    popupText: "Bestall Pitstops burgare och wok snabbt hem.",
+    popupText: "Ravintola Pitstop • burgare och wok snabbt hem.",
     popupBtn: "Bestall nu",
     openNow: "Oppet nu",
     closedNow: "Stangt nu",
@@ -465,8 +464,8 @@ function updateStaticTexts() {
   document.getElementById("lbl-address").textContent = t.address;
   document.getElementById("lbl-phone").textContent = t.phone;
 
-  document.getElementById("menu-eyebrow").textContent = t.menuEyebrow;
   document.getElementById("menu-title").textContent = t.menuTitle;
+  document.getElementById("popular-title").textContent = t.popularTitle;
   document.getElementById("gallery-eyebrow").textContent = t.galleryEyebrow;
   document.getElementById("gallery-title").textContent = t.galleryTitle;
 
@@ -643,19 +642,21 @@ function showOrderPopup() {
 
 function initOrderPopupTrigger() {
   if (!menuPanel) return;
-  const observer = new IntersectionObserver(
-    function (entries) {
-      for (let i = 0; i < entries.length; i += 1) {
-        const entry = entries[i];
-        if (entry.isIntersecting && window.scrollY > 120) {
-          showOrderPopup();
-          observer.unobserve(menuPanel);
-        }
-      }
-    },
-    { threshold: 0.36 }
-  );
-  observer.observe(menuPanel);
+  function onScrollCheck() {
+    const rect = menuPanel.getBoundingClientRect();
+    if (!state.orderPopupShown && rect.top < window.innerHeight * 0.72 && window.scrollY > 120) {
+      showOrderPopup();
+    }
+    toggleBackToTop();
+  }
+  window.addEventListener("scroll", onScrollCheck, { passive: true });
+  onScrollCheck();
+}
+
+function toggleBackToTop() {
+  if (!backToTopBtn) return;
+  const shouldShow = window.scrollY > 420;
+  backToTopBtn.classList.toggle("show", shouldShow);
 }
 
 function buildCategoryNav(categories) {
@@ -670,12 +671,66 @@ function buildCategoryNav(categories) {
   }
 }
 
+function findItemByName(categories, pattern) {
+  const needle = normalizeText(pattern);
+  for (let c = 0; c < categories.length; c += 1) {
+    const cat = categories[c];
+    for (let i = 0; i < cat.items.length; i += 1) {
+      const item = cat.items[i];
+      if (normalizeText(item.name).includes(needle)) {
+        return { item: item, category: cat };
+      }
+    }
+  }
+  return null;
+}
+
+function renderPopularItems(categories) {
+  popularItemsRoot.innerHTML = "";
+  const picks = [
+    "OG Single Smash",
+    "BBQ Single Smash",
+    "Chicken Wok",
+    "Beef Wok",
+    "Loaded fries",
+    "Wrap"
+  ];
+
+  for (let i = 0; i < picks.length; i += 1) {
+    const found = findItemByName(categories, picks[i]);
+    if (!found) continue;
+    const card = document.createElement("article");
+    card.className = "popular-card reveal";
+
+    const img = document.createElement("img");
+    const isCombo = normalizeText(found.category.name).includes("combo");
+    const imageUrl = isCombo
+      ? "https://imageproxy.wolt.com/assets/692451135898eec529a3994f"
+      : found.item.image || found.item.fallback_image || found.category.image;
+    img.src = imageUrl || "https://imageproxy.wolt.com/assets/692451135898eec529a3994f";
+    img.alt = found.item.name;
+    img.loading = "lazy";
+
+    const body = document.createElement("div");
+    body.className = "popular-body";
+    const h4 = document.createElement("h4");
+    h4.textContent = translateName(found.item.name, state.lang);
+    const p = document.createElement("p");
+    p.textContent = formatPrice(getOriginalPriceOverride(found.item.name, found.category.name, found.item.price), state.lang);
+
+    body.appendChild(h4);
+    body.appendChild(p);
+    card.appendChild(img);
+    card.appendChild(body);
+    popularItemsRoot.appendChild(card);
+  }
+}
+
 function renderMenu() {
   const t = getUI();
   const payload = state.menu;
   const restaurant = payload.restaurant;
   const categories = payload.categories;
-  const source = payload.source;
   const template = document.getElementById("item-card-template");
 
   document.getElementById("restaurant-name").textContent = restaurant.name || "Pitstop";
@@ -690,9 +745,8 @@ function renderMenu() {
   document.getElementById("address").textContent = restaurant.address || "-";
   document.getElementById("phone").textContent = restaurant.phone || "-";
 
-  document.getElementById("menu-stamp").textContent = t.updatedPrefix + " " + source.extracted_date;
-
   buildCategoryNav(categories);
+  renderPopularItems(categories);
   menuRoot.innerHTML = "";
 
   for (let c = 0; c < categories.length; c += 1) {
@@ -735,7 +789,7 @@ function renderMenu() {
 
       let imageUrl = item.image || item.fallback_image || category.image || restaurant.hero_image;
       if (normalizeText(category.name).includes("combo")) {
-        imageUrl = item.image || item.fallback_image || "Assets/515442093_122113047429006421_7740685187538486109_n.jpg";
+        imageUrl = item.image || item.fallback_image || "https://imageproxy.wolt.com/assets/692451135898eec529a3994f";
       }
       if (imageUrl) {
         image.src = imageUrl;
@@ -787,6 +841,7 @@ function rerender() {
   renderAboutAndReviews();
   renderGallery();
   setHeroSlide(state.heroSlideIndex);
+  toggleBackToTop();
   animateElements();
 }
 
@@ -839,6 +894,12 @@ function attachEvents() {
       orderPopup.setAttribute("aria-hidden", "true");
     }
   });
+
+  if (backToTopBtn) {
+    backToTopBtn.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
 }
 
 async function init() {
