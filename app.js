@@ -51,7 +51,7 @@ const ui = {
     popularTitle: "Popular Items",
     galleryEyebrow: "PITSTOP FOOD GALLERY",
     galleryTitle: "Pitstop Food Gallery",
-    locationEyebrow: "VISIT PITSTOP",
+    locationEyebrow: "",
     locationTitle: "Location & Opening Hours",
     locationStamp: "",
     whereTitle: "Where to Find Us",
@@ -61,9 +61,9 @@ const ui = {
     aboutFacebook: "ⓕ Pitstop Ravintola",
     reviewsTitle: "Google Reviews",
     reviewsLink: "See all Google reviews",
-    popupTitle: "Order on",
+    popupTitle: "Order on Wolt",
     popupText: "",
-    popupBtn: "Order now",
+    popupBtn: "Order on Wolt",
     openNow: "Open now",
     closedNow: "Closed now",
     until: "until",
@@ -88,7 +88,7 @@ const ui = {
     popularTitle: "Suositut annokset",
     galleryEyebrow: "PITSTOP FOOD GALLERY",
     galleryTitle: "Pitstop Food Gallery",
-    locationEyebrow: "VIERAILE PITSTOPISSA",
+    locationEyebrow: "",
     locationTitle: "Sijainti ja aukioloajat",
     locationStamp: "",
     whereTitle: "Loydat meidat tasta",
@@ -98,9 +98,9 @@ const ui = {
     aboutFacebook: "ⓕ Pitstop Ravintola",
     reviewsTitle: "Google-arvostelut",
     reviewsLink: "Katso kaikki Google-arvostelut",
-    popupTitle: "Tilaa",
+    popupTitle: "Tilaa Woltista",
     popupText: "",
-    popupBtn: "Tilaa nyt",
+    popupBtn: "Tilaa Woltista",
     openNow: "Avoinna nyt",
     closedNow: "Suljettu nyt",
     until: "asti",
@@ -125,7 +125,7 @@ const ui = {
     popularTitle: "Populart",
     galleryEyebrow: "PITSTOP FOOD GALLERY",
     galleryTitle: "Pitstop Food Gallery",
-    locationEyebrow: "BESOK PITSTOP",
+    locationEyebrow: "",
     locationTitle: "Plats och oppettider",
     locationStamp: "",
     whereTitle: "Hitta oss",
@@ -135,9 +135,9 @@ const ui = {
     aboutFacebook: "ⓕ Pitstop Ravintola",
     reviewsTitle: "Google-recensioner",
     reviewsLink: "Se alla Google-recensioner",
-    popupTitle: "Bestall via",
+    popupTitle: "Bestall via Wolt",
     popupText: "",
-    popupBtn: "Bestall nu",
+    popupBtn: "Bestall via Wolt",
     openNow: "Oppet nu",
     closedNow: "Stangt nu",
     until: "till",
@@ -490,7 +490,9 @@ function updateStaticTexts() {
   if (galleryEyebrowNode) galleryEyebrowNode.textContent = t.galleryEyebrow;
   document.getElementById("gallery-title").textContent = t.galleryTitle;
 
-  document.getElementById("location-eyebrow").textContent = t.locationEyebrow;
+  const locationEyebrowNode = document.getElementById("location-eyebrow");
+  locationEyebrowNode.textContent = t.locationEyebrow;
+  locationEyebrowNode.style.display = t.locationEyebrow ? "block" : "none";
   document.getElementById("location-title").textContent = t.locationTitle;
   const locationStampNode = document.getElementById("location-stamp");
   locationStampNode.textContent = t.locationStamp;
@@ -568,8 +570,9 @@ function setHeroSlide() {
   const media = state.content.hero_media;
   if (!media || media.length === 0) return;
   state.heroSlideIndex = 0;
+  const isMobileHero = window.matchMedia("(max-width: 1020px)").matches;
   const primary = media[0];
-  const secondary = media[1] || media[2] || primary;
+  const secondary = isMobileHero ? media[2] || media[1] || primary : media[1] || media[2] || primary;
   const tertiary = media[2] || media[1] || secondary;
   stopHeroVideos();
   playHeroVideo(heroSlideVideoMain, primary.src);
@@ -854,7 +857,7 @@ function renderPopularItems(categories) {
     "BBQ Single Smash",
     "Chicken Wok",
     "Beef Wok",
-    "Loaded fries",
+    "OG Chicken",
     "Wrap"
   ];
 
@@ -992,6 +995,8 @@ function attachEvents() {
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
   }
+
+  window.addEventListener("resize", setHeroSlide, { passive: true });
 }
 
 async function init() {

@@ -512,6 +512,10 @@ main {
   font-size: 11px;
 }
 
+.small-label:empty {
+  display: none;
+}
+
 .panel-head h2 {
   margin: 0;
   font-family: "Rowdies", sans-serif;
