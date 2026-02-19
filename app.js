@@ -1,8 +1,8 @@
 const menuRoot = document.getElementById("menu-sections");
 const navRoot = document.getElementById("category-nav");
 const hero = document.getElementById("hero");
-const heroMediaShell = document.querySelector(".hero-media-shell");
-const heroSlideVideo = document.getElementById("hero-slide-video");
+const heroSlideVideoMain = document.getElementById("hero-slide-video-main");
+const heroSlideVideoSecondary = document.getElementById("hero-slide-video-secondary");
 const galleryGrid = document.getElementById("gallery-grid");
 const lightbox = document.getElementById("lightbox");
 const lightboxImage = document.getElementById("lightbox-image");
@@ -39,6 +39,8 @@ const ui = {
     foodoraBtn: "Foodora",
     woltBtn: "Order on Wolt",
     heroTop: "TURKU • BURGERS & WOK",
+    heroTitle: "Best Wok & Smash Burgers",
+    heroLead: "Freshly made, fast, and full of flavor",
     heroExtra: "Fresh wok heat, smashed burger comfort, and quick service in central Turku.",
     rating: "Rating",
     address: "Address",
@@ -74,6 +76,8 @@ const ui = {
     foodoraBtn: "Foodora",
     woltBtn: "Tilaa Woltista",
     heroTop: "TURKU • HAMPURILAISET & WOK",
+    heroTitle: "Paras wok ja smash-burgerit",
+    heroLead: "Tuoreena, nopeasti ja taynna makua",
     heroExtra: "Tuoretta wokkia, smash-burgereita ja nopeaa palvelua Turun keskustassa.",
     rating: "Arvosana",
     address: "Osoite",
@@ -109,6 +113,8 @@ const ui = {
     foodoraBtn: "Foodora",
     woltBtn: "Bestall via Wolt",
     heroTop: "ABO • BURGARE & WOK",
+    heroTitle: "Basta wok och smashburgare",
+    heroLead: "Farskt, snabbt och fullt av smak",
     heroExtra: "Farsk wok, smashburgare och snabb service i centrala Abo.",
     rating: "Betyg",
     address: "Adress",
@@ -256,7 +262,9 @@ const state = {
   heroSlideIndex: 0,
   statusTimer: null,
   heroFallbackTimeout: null,
-  orderPopupShown: false
+  orderPopupCloseCount: 0,
+  orderPopupDismissed: false,
+  menuInPopupZone: false
 };
 
 function escapeRegExp(text) {
@@ -454,12 +462,14 @@ function updateStaticTexts() {
   document.documentElement.lang = state.lang;
 
   document.getElementById("google-btn").textContent = t.googleBtn;
-  document.getElementById("facebook-btn").textContent = "f";
   document.getElementById("facebook-btn").setAttribute("aria-label", t.facebookBtn);
+  document.getElementById("facebook-btn").setAttribute("title", t.facebookBtn);
   document.getElementById("foodora-btn").textContent = t.foodoraBtn;
   document.getElementById("wolt-btn").textContent = t.woltBtn;
 
   document.getElementById("hero-top").textContent = t.heroTop;
+  document.getElementById("restaurant-name").textContent = t.heroTitle;
+  document.getElementById("restaurant-description").textContent = t.heroLead;
   document.getElementById("hero-extra").textContent = t.heroExtra;
   document.getElementById("lbl-rating").textContent = t.rating;
   document.getElementById("lbl-address").textContent = t.address;
@@ -496,11 +506,29 @@ function updateStaticTexts() {
   }
 }
 
-function stopHeroVideo() {
-  heroSlideVideo.pause();
+function stopHeroVideos() {
+  heroSlideVideoMain.pause();
+  heroSlideVideoSecondary.pause();
   if (state.heroFallbackTimeout) {
     clearTimeout(state.heroFallbackTimeout);
     state.heroFallbackTimeout = null;
+  }
+}
+
+function playHeroVideo(video, src) {
+  if (!src) return;
+  video.currentTime = 0;
+  video.src = src;
+  video.muted = true;
+  video.playsInline = true;
+  video.autoplay = true;
+  video.loop = false;
+  video.preload = "metadata";
+  const playPromise = video.play();
+  if (playPromise && typeof playPromise.catch === "function") {
+    playPromise.catch(function () {
+      // Ignore autoplay interruptions on strict browsers.
+    });
   }
 }
 
@@ -508,30 +536,20 @@ function setHeroSlide(index) {
   const media = state.content.hero_media;
   if (!media || media.length === 0) return;
   state.heroSlideIndex = (index + media.length) % media.length;
-  const item = media[state.heroSlideIndex];
-  heroMediaShell.classList.add("is-video");
-  stopHeroVideo();
-  heroSlideVideo.currentTime = 0;
-  heroSlideVideo.src = item.src;
-  heroSlideVideo.muted = true;
-  heroSlideVideo.playsInline = true;
-  heroSlideVideo.autoplay = true;
-  heroSlideVideo.loop = false;
-  const playPromise = heroSlideVideo.play();
-  if (playPromise && typeof playPromise.catch === "function") {
-    playPromise.catch(function () {
-      // Ignore autoplay interruptions on strict browsers.
-    });
-  }
+  const primary = media[state.heroSlideIndex];
+  const secondary = media[(state.heroSlideIndex + 1) % media.length];
+  stopHeroVideos();
+  playHeroVideo(heroSlideVideoMain, primary.src);
+  playHeroVideo(heroSlideVideoSecondary, secondary.src);
 
   // Fallback in case "ended" event is blocked.
   state.heroFallbackTimeout = setTimeout(function () {
     setHeroSlide(state.heroSlideIndex + 1);
-  }, 35000);
+  }, 42000);
 }
 
 function startHeroSlideshow() {
-  heroSlideVideo.onended = function () {
+  heroSlideVideoMain.onended = function () {
     setHeroSlide(state.heroSlideIndex + 1);
   };
   setHeroSlide(state.heroSlideIndex);
@@ -587,6 +605,7 @@ function renderGallery() {
     img.src = src;
     img.alt = "Pitstop gallery photo";
     img.loading = "lazy";
+    img.decoding = "async";
 
     button.appendChild(img);
     galleryGrid.appendChild(button);
@@ -635,19 +654,35 @@ function startStatusClock() {
 }
 
 function showOrderPopup() {
-  if (state.orderPopupShown) return;
-  state.orderPopupShown = true;
+  if (state.orderPopupDismissed || orderPopup.classList.contains("open")) return;
   orderPopup.classList.add("open");
   orderPopup.setAttribute("aria-hidden", "false");
+}
+
+function closeOrderPopup(trackDismiss) {
+  if (!orderPopup.classList.contains("open")) return;
+  orderPopup.classList.remove("open");
+  orderPopup.setAttribute("aria-hidden", "true");
+  if (trackDismiss) {
+    state.orderPopupCloseCount += 1;
+    if (state.orderPopupCloseCount >= 2) {
+      state.orderPopupDismissed = true;
+    }
+  }
 }
 
 function initOrderPopupTrigger() {
   if (!menuPanel) return;
   function onScrollCheck() {
     const rect = menuPanel.getBoundingClientRect();
-    if (!state.orderPopupShown && rect.top < window.innerHeight * 0.72 && window.scrollY > 120) {
+    const inMenuZone =
+      rect.top < window.innerHeight * 0.72 &&
+      rect.bottom > window.innerHeight * 0.18 &&
+      window.scrollY > 120;
+    if (!state.menuInPopupZone && inMenuZone && !state.orderPopupDismissed) {
       showOrderPopup();
     }
+    state.menuInPopupZone = inMenuZone;
     toggleBackToTop();
   }
   window.addEventListener("scroll", onScrollCheck, { passive: true });
@@ -711,6 +746,7 @@ function renderPopularItems(categories) {
     img.src = imageUrl || "https://imageproxy.wolt.com/assets/692451135898eec529a3994f";
     img.alt = found.item.name;
     img.loading = "lazy";
+    img.decoding = "async";
 
     const body = document.createElement("div");
     body.className = "popular-body";
@@ -734,13 +770,8 @@ function renderMenu() {
   const categories = payload.categories;
   const template = document.getElementById("item-card-template");
 
-  document.getElementById("restaurant-name").textContent = restaurant.name || "Pitstop";
-  document.getElementById("restaurant-description").textContent =
-    state.lang === "fi"
-      ? "Wok- ja smash-hampurilaisia"
-      : state.lang === "sv"
-        ? "Wok och smashburgare"
-        : restaurant.description || "Wok and smashed burgers";
+  document.getElementById("restaurant-name").textContent = t.heroTitle;
+  document.getElementById("restaurant-description").textContent = t.heroLead;
 
   document.getElementById("rating").textContent = restaurant.rating_score || "-";
   document.getElementById("address").textContent = restaurant.address || "-";
@@ -795,6 +826,9 @@ function renderMenu() {
       if (imageUrl) {
         image.src = imageUrl;
         image.alt = item.name;
+        image.loading = "lazy";
+        image.decoding = "async";
+        image.fetchPriority = "low";
       } else {
         image.remove();
       }
@@ -885,14 +919,12 @@ function attachEvents() {
   });
 
   orderPopupClose.addEventListener("click", function () {
-    orderPopup.classList.remove("open");
-    orderPopup.setAttribute("aria-hidden", "true");
+    closeOrderPopup(true);
   });
 
   orderPopup.addEventListener("click", function (event) {
     if (event.target === orderPopup) {
-      orderPopup.classList.remove("open");
-      orderPopup.setAttribute("aria-hidden", "true");
+      closeOrderPopup(true);
     }
   });
 
