@@ -101,6 +101,12 @@
 
         <div class="hero-grid">
           <div class="hero-copy">
+            <img
+              class="hero-copy-image"
+              src="Assets/548359682_122103880197006421_3443645145392154988_n.jpg"
+              alt="Prawn wok"
+              loading="lazy"
+            />
             <p id="hero-top" class="hero-top">TURKU • BURGERS & WOK</p>
             <h1 id="restaurant-name">Ravintola Pitstop</h1>
             <p id="restaurant-description" class="hero-lead">Wok and smashed burgers</p>
@@ -135,11 +141,14 @@
       <section class="menu-panel">
         <div class="panel-head">
           <div>
-            <p id="menu-eyebrow" class="small-label">FULL PITSTOP MENU</p>
             <h2 id="menu-title">Updated Prices, Pictures, and Descriptions</h2>
           </div>
-          <p id="menu-stamp" class="stamp"></p>
         </div>
+
+        <section class="popular-strip">
+          <h3 id="popular-title">Popular Items</h3>
+          <div id="popular-items" class="popular-items"></div>
+        </section>
 
         <nav id="category-nav" class="category-nav" aria-label="Menu categories"></nav>
         <div id="menu-sections"></div>
@@ -215,6 +224,8 @@
       <p id="footer-text"></p>
     </footer>
 
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top">↑</button>
+
     <template id="item-card-template">
       <article class="item-card reveal">
         <div class="item-image-wrap">
@@ -245,12 +256,20 @@
 
     <div id="order-popup" class="order-popup" aria-hidden="true">
       <button id="order-popup-close" class="order-popup-close" aria-label="Close order popup">×</button>
-      <img
-        id="order-popup-image"
-        src="https://imageproxy.wolt.com/assets/692451135898eec529a3994f"
-        alt="Pitstop burger"
-        loading="lazy"
-      />
+      <div class="order-popup-images">
+        <img
+          id="order-popup-burger"
+          src="https://imageproxy.wolt.com/assets/692451135898eec529a3994f"
+          alt="Pitstop burger"
+          loading="lazy"
+        />
+        <img
+          id="order-popup-wok"
+          src="Assets/515442093_122113047429006421_7740685187538486109_n.jpg"
+          alt="Pitstop wok"
+          loading="lazy"
+        />
+      </div>
       <h3 id="order-popup-title">Order on Wolt</h3>
       <p id="order-popup-text">Get Pitstop burgers and wok delivered fast.</p>
       <a id="order-popup-link" class="wolt-link popup-link" target="_blank" rel="noopener noreferrer">Order now</a>
