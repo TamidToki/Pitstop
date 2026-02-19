@@ -483,7 +483,8 @@ function updateStaticTexts() {
 
   document.getElementById("menu-title").textContent = t.menuTitle;
   document.getElementById("popular-title").textContent = t.popularTitle;
-  document.getElementById("gallery-eyebrow").textContent = t.galleryEyebrow;
+  const galleryEyebrowNode = document.getElementById("gallery-eyebrow");
+  if (galleryEyebrowNode) galleryEyebrowNode.textContent = t.galleryEyebrow;
   document.getElementById("gallery-title").textContent = t.galleryTitle;
 
   document.getElementById("location-eyebrow").textContent = t.locationEyebrow;
@@ -560,8 +561,8 @@ function setHeroSlide() {
   if (!media || media.length === 0) return;
   state.heroSlideIndex = 0;
   const primary = media[0];
-  const secondary = media[1] || primary;
-  const tertiary = media[2] || secondary;
+  const secondary = media[2] || media[1] || primary;
+  const tertiary = media[1] || secondary;
   stopHeroVideos();
   playHeroVideo(heroSlideVideoMain, primary.src);
   playHeroVideo(heroSlideVideoSecondary, secondary.src);

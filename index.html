@@ -115,14 +115,7 @@
 
         <div class="hero-grid">
           <div class="hero-copy">
-            <div class="hero-media-stack" aria-label="Restaurant highlights">
-              <div class="hero-media-shell hero-media-top-left">
-                <video id="hero-slide-video-tertiary" muted playsinline preload="metadata"></video>
-              </div>
-              <div class="hero-media-shell hero-media-top-right">
-                <video id="hero-slide-video-secondary" muted playsinline preload="metadata"></video>
-              </div>
-            </div>
+            <div class="hero-copy-spacer" aria-hidden="true"></div>
             <p id="hero-top" class="hero-top">TURKU • BURGERS & WOK</p>
             <h1 id="restaurant-name">Best Wok &amp; Smash Burgers</h1>
             <p id="restaurant-description" class="hero-lead">Freshly made, fast, and full of flavor.</p>
@@ -144,8 +137,13 @@
             </div>
           </div>
 
-          <div class="hero-media-shell hero-media-main" aria-label="Featured Pitstop video">
-            <video id="hero-slide-video-main" muted playsinline preload="metadata"></video>
+          <div class="hero-media-pair" aria-label="Featured Pitstop videos">
+            <div class="hero-media-shell hero-media-main">
+              <video id="hero-slide-video-main" muted playsinline preload="metadata"></video>
+            </div>
+            <div class="hero-media-shell hero-media-secondary">
+              <video id="hero-slide-video-secondary" muted playsinline preload="metadata"></video>
+            </div>
           </div>
         </div>
       </section>
@@ -224,7 +222,6 @@
       <section class="gallery-panel">
         <div class="panel-head">
           <div>
-            <p id="gallery-eyebrow" class="small-label">PITSTOP GALLERY</p>
             <h2 id="gallery-title">Food Gallery</h2>
           </div>
         </div>
@@ -268,22 +265,8 @@
 
     <div id="order-popup" class="order-popup" aria-hidden="true">
       <button id="order-popup-close" class="order-popup-close" aria-label="Close order popup">×</button>
-      <div class="order-popup-images">
-        <img
-          id="order-popup-burger"
-          src="https://imageproxy.wolt.com/assets/692451135898eec529a3994f"
-          alt="Pitstop burger"
-          loading="lazy"
-        />
-        <img
-          id="order-popup-wok"
-          src="Assets/515442093_122113047429006421_7740685187538486109_n.jpg"
-          alt="Pitstop wok"
-          loading="lazy"
-        />
-      </div>
       <h3 id="order-popup-title">Order on Wolt</h3>
-      <p id="order-popup-text">Get Pitstop burgers and wok delivered fast.</p>
+      <p id="order-popup-text"><span class="wolt-mini-logo" aria-hidden="true">W</span> Fast delivery with Wolt.</p>
       <a id="order-popup-link" class="wolt-link popup-link" target="_blank" rel="noopener noreferrer">Order now</a>
     </div>
 
