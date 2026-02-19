@@ -62,7 +62,7 @@ const ui = {
     reviewsTitle: "Google Reviews",
     reviewsLink: "See all Google reviews",
     popupTitle: "Order on Wolt",
-    popupText: "Ravintola Pitstop • burgers and wok delivered fast.",
+    popupText: "",
     popupBtn: "Order now",
     openNow: "Open now",
     closedNow: "Closed now",
@@ -99,7 +99,7 @@ const ui = {
     reviewsTitle: "Google-arvostelut",
     reviewsLink: "Katso kaikki Google-arvostelut",
     popupTitle: "Tilaa Woltista",
-    popupText: "Ravintola Pitstop • burgerit ja wokit nopeasti kotiin.",
+    popupText: "",
     popupBtn: "Tilaa nyt",
     openNow: "Avoinna nyt",
     closedNow: "Suljettu nyt",
@@ -136,7 +136,7 @@ const ui = {
     reviewsTitle: "Google-recensioner",
     reviewsLink: "Se alla Google-recensioner",
     popupTitle: "Bestall via Wolt",
-    popupText: "Ravintola Pitstop • burgare och wok snabbt hem.",
+    popupText: "",
     popupBtn: "Bestall nu",
     openNow: "Oppet nu",
     closedNow: "Stangt nu",
@@ -497,7 +497,9 @@ function updateStaticTexts() {
   document.getElementById("reviews-title").textContent = t.reviewsTitle;
   document.getElementById("google-link").textContent = t.reviewsLink;
   document.getElementById("order-popup-title").textContent = t.popupTitle;
-  document.getElementById("order-popup-text").textContent = t.popupText;
+  const popupTextNode = document.getElementById("order-popup-text");
+  popupTextNode.textContent = t.popupText;
+  popupTextNode.style.display = t.popupText ? "inline-flex" : "none";
   document.getElementById("order-popup-link").textContent = t.popupBtn;
   document.getElementById("footer-text").textContent = t.footer;
 
@@ -595,8 +597,10 @@ function renderAboutAndReviews() {
   const template = document.getElementById("review-card-template");
   reviewsRoot.innerHTML = "";
 
-  for (let i = 0; i < reviewsBlock.reviews.length; i += 1) {
-    const review = reviewsBlock.reviews[i];
+  const sourceReviews = reviewsBlock.reviews || [];
+  const countToShow = sourceReviews.length > 0 ? 6 : 0;
+  for (let i = 0; i < countToShow; i += 1) {
+    const review = sourceReviews[i % sourceReviews.length];
     const fragment = template.content.cloneNode(true);
     fragment.querySelector(".review-author").textContent = review.author;
     fragment.querySelector(".review-meta").textContent = review.rating + "/5 • " + review.date;

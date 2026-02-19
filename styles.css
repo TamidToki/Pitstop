@@ -131,7 +131,7 @@ body {
 
 .brand-logo {
   display: block;
-  width: clamp(46px, 5.5vw, 72px);
+  width: clamp(40px, 4.9vw, 62px);
   height: auto;
   object-fit: contain;
   border-radius: 6px;
@@ -340,6 +340,14 @@ main {
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.18));
 }
 
+.hero-mobile-logo {
+  display: none;
+}
+
+.hero-media-pair-wrap {
+  align-self: stretch;
+}
+
 .hero-media-shell {
   position: relative;
   width: 100%;
@@ -538,7 +546,7 @@ main {
   overflow: hidden;
   background: color-mix(in srgb, var(--card) 88%, transparent);
   display: grid;
-  grid-template-rows: 120px auto;
+  grid-template-rows: 120px minmax(74px, auto);
 }
 
 .popular-card img {
@@ -547,12 +555,12 @@ main {
   object-fit: cover;
   object-position: center;
   display: block;
-  transform: scale(1.56);
+  transform: scale(1.62);
   transition: transform var(--ease);
 }
 
 .popular-card:hover img {
-  transform: scale(1.96);
+  transform: scale(2.14);
 }
 
 .popular-body {
@@ -562,15 +570,13 @@ main {
 }
 
 .popular-body h4 {
-  margin: 0 0 4px;
+  margin: 0 0 6px;
   font-size: 12px;
   line-height: 1.28;
   color: var(--text);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  min-height: 30px;
+  white-space: normal;
+  overflow: visible;
+  min-height: 0;
 }
 
 .popular-body p {
@@ -836,6 +842,7 @@ main {
 .reviews-list {
   margin: 10px 0 12px;
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 9px;
 }
 
@@ -956,8 +963,8 @@ main {
 .popup-link {
   display: inline-flex;
   align-items: center;
-  font-size: 14px;
-  padding: 10px 14px;
+  font-size: 12px;
+  padding: 8px 11px;
   margin-top: 2px;
 }
 
@@ -1068,7 +1075,7 @@ main {
   }
 
   .brand-logo {
-    width: min(58px, 11vw);
+    width: min(50px, 9vw);
   }
 
   .theme-toggle,
@@ -1095,10 +1102,29 @@ main {
     gap: 10px;
   }
 
-  .hero-media-pair {
+  .hero-media-pair-wrap {
     justify-self: center;
-    width: min(100%, 360px);
+    width: min(100%, 440px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 8px;
     order: -1;
+  }
+
+  .hero-mobile-logo {
+    display: block;
+    width: min(82px, 16vw);
+    height: auto;
+    object-fit: contain;
+  }
+
+  .hero-media-pair {
+    width: min(100%, 340px);
+  }
+
+  .hero-copy-spacer {
+    display: none;
   }
 
   .location-grid {
@@ -1148,7 +1174,7 @@ main {
   }
 
   .brand-logo {
-    width: min(50px, 12vw);
+    width: min(42px, 10vw);
   }
 
   .theme-toggle,
@@ -1169,8 +1195,16 @@ main {
     padding: 6px 7px;
   }
 
+  .hero-media-pair-wrap {
+    width: min(100%, 360px);
+  }
+
+  .hero-mobile-logo {
+    width: min(72px, 16vw);
+  }
+
   .hero-media-pair {
-    width: min(100%, 310px);
+    width: min(100%, 280px);
   }
 
   .hero-lead,
@@ -1191,6 +1225,10 @@ main {
     grid-template-columns: 1fr;
   }
 
+  .reviews-list {
+    grid-template-columns: 1fr;
+  }
+
   .panel-head {
     flex-direction: column;
     align-items: flex-start;
@@ -1199,7 +1237,7 @@ main {
 
 @media (max-width: 620px) {
   .brand-logo {
-    width: min(42px, 14vw);
+    width: min(36px, 12vw);
   }
 
   .brand-word {
@@ -1233,8 +1271,17 @@ main {
     width: min(130px, 58vw);
   }
 
+  .hero-media-pair-wrap {
+    width: min(100%, 320px);
+    gap: 6px;
+  }
+
+  .hero-mobile-logo {
+    width: min(58px, 17vw);
+  }
+
   .hero-media-pair {
-    width: min(100%, 260px);
+    width: min(100%, 240px);
     gap: 6px;
   }
 
