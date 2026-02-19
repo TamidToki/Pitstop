@@ -3,6 +3,7 @@ const navRoot = document.getElementById("category-nav");
 const hero = document.getElementById("hero");
 const heroSlideVideoMain = document.getElementById("hero-slide-video-main");
 const heroSlideVideoSecondary = document.getElementById("hero-slide-video-secondary");
+const heroSlideVideoTertiary = document.getElementById("hero-slide-video-tertiary");
 const galleryGrid = document.getElementById("gallery-grid");
 const lightbox = document.getElementById("lightbox");
 const lightboxImage = document.getElementById("lightbox-image");
@@ -40,8 +41,8 @@ const ui = {
     woltBtn: "Order on Wolt",
     heroTop: "TURKU • BURGERS & WOK",
     heroTitle: "Best Wok & Smash Burgers",
-    heroLead: "Freshly made, fast, and full of flavor",
-    heroExtra: "Fresh wok heat, smashed burger comfort, and quick service in central Turku.",
+    heroLead: "Freshly made, fast, full of flavor, and quick in central Turku.",
+    heroExtra: "",
     rating: "Rating",
     address: "Address",
     phone: "Phone",
@@ -77,8 +78,8 @@ const ui = {
     woltBtn: "Tilaa Woltista",
     heroTop: "TURKU • HAMPURILAISET & WOK",
     heroTitle: "Paras wok ja smash-burgerit",
-    heroLead: "Tuoreena, nopeasti ja taynna makua",
-    heroExtra: "Tuoretta wokkia, smash-burgereita ja nopeaa palvelua Turun keskustassa.",
+    heroLead: "Tuoreena, nopeasti ja taynna makua Turun keskustassa.",
+    heroExtra: "",
     rating: "Arvosana",
     address: "Osoite",
     phone: "Puhelin",
@@ -114,8 +115,8 @@ const ui = {
     woltBtn: "Bestall via Wolt",
     heroTop: "ABO • BURGARE & WOK",
     heroTitle: "Basta wok och smashburgare",
-    heroLead: "Farskt, snabbt och fullt av smak",
-    heroExtra: "Farsk wok, smashburgare och snabb service i centrala Abo.",
+    heroLead: "Farskt, snabbt och fullt av smak i centrala Abo.",
+    heroExtra: "",
     rating: "Betyg",
     address: "Adress",
     phone: "Telefon",
@@ -470,7 +471,9 @@ function updateStaticTexts() {
   document.getElementById("hero-top").textContent = t.heroTop;
   document.getElementById("restaurant-name").textContent = t.heroTitle;
   document.getElementById("restaurant-description").textContent = t.heroLead;
-  document.getElementById("hero-extra").textContent = t.heroExtra;
+  const heroExtraNode = document.getElementById("hero-extra");
+  heroExtraNode.textContent = t.heroExtra;
+  heroExtraNode.hidden = !t.heroExtra;
   document.getElementById("lbl-rating").textContent = t.rating;
   document.getElementById("lbl-address").textContent = t.address;
   document.getElementById("lbl-phone").textContent = t.phone;
@@ -507,8 +510,9 @@ function updateStaticTexts() {
 }
 
 function stopHeroVideos() {
-  heroSlideVideoMain.pause();
-  heroSlideVideoSecondary.pause();
+  if (heroSlideVideoMain) heroSlideVideoMain.pause();
+  if (heroSlideVideoSecondary) heroSlideVideoSecondary.pause();
+  if (heroSlideVideoTertiary) heroSlideVideoTertiary.pause();
   if (state.heroFallbackTimeout) {
     clearTimeout(state.heroFallbackTimeout);
     state.heroFallbackTimeout = null;
@@ -516,7 +520,7 @@ function stopHeroVideos() {
 }
 
 function playHeroVideo(video, src) {
-  if (!src) return;
+  if (!video || !src) return;
   video.currentTime = 0;
   video.src = src;
   video.muted = true;
@@ -538,9 +542,11 @@ function setHeroSlide(index) {
   state.heroSlideIndex = (index + media.length) % media.length;
   const primary = media[state.heroSlideIndex];
   const secondary = media[(state.heroSlideIndex + 1) % media.length];
+  const tertiary = media[(state.heroSlideIndex + 2) % media.length];
   stopHeroVideos();
   playHeroVideo(heroSlideVideoMain, primary.src);
   playHeroVideo(heroSlideVideoSecondary, secondary.src);
+  playHeroVideo(heroSlideVideoTertiary, tertiary.src);
 
   // Fallback in case "ended" event is blocked.
   state.heroFallbackTimeout = setTimeout(function () {
