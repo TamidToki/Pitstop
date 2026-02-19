@@ -462,7 +462,11 @@ function updateStaticTexts() {
   const t = getUI();
   document.documentElement.lang = state.lang;
 
-  document.getElementById("google-btn").textContent = t.googleBtn;
+  const googleBtn = document.getElementById("google-btn");
+  const googleBtnLabel = document.getElementById("google-btn-label");
+  if (googleBtnLabel) googleBtnLabel.textContent = t.googleBtn;
+  googleBtn.setAttribute("aria-label", t.googleBtn);
+  googleBtn.setAttribute("title", t.googleBtn);
   document.getElementById("facebook-btn").setAttribute("aria-label", t.facebookBtn);
   document.getElementById("facebook-btn").setAttribute("title", t.facebookBtn);
   document.getElementById("foodora-btn").textContent = t.foodoraBtn;
@@ -544,8 +548,8 @@ function setHeroSlide(index) {
   const secondary = media[(state.heroSlideIndex + 1) % media.length];
   const tertiary = media[(state.heroSlideIndex + 2) % media.length];
   stopHeroVideos();
-  playHeroVideo(heroSlideVideoMain, primary.src);
-  playHeroVideo(heroSlideVideoSecondary, secondary.src);
+  playHeroVideo(heroSlideVideoMain, secondary.src);
+  playHeroVideo(heroSlideVideoSecondary, primary.src);
   playHeroVideo(heroSlideVideoTertiary, tertiary.src);
 
   // Fallback in case "ended" event is blocked.
@@ -679,22 +683,108 @@ function closeOrderPopup(trackDismiss) {
 
 function initOrderPopupTrigger() {
   if (!menuPanel) return;
+  let ticking = false;
   function onScrollCheck() {
-    const rect = menuPanel.getBoundingClientRect();
-    const inMenuZone =
-      rect.top < window.innerHeight * 0.72 &&
-      rect.bottom > window.innerHeight * 0.18 &&
-      window.scrollY > 120;
-    if (!state.menuInPopupZone && inMenuZone && !state.orderPopupDismissed) {
-      showOrderPopup();
-    }
-    state.menuInPopupZone = inMenuZone;
-    toggleBackToTop();
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      const rect = menuPanel.getBoundingClientRect();
+      const inMenuZone =
+        rect.top < window.innerHeight * 0.72 &&
+        rect.bottom > window.innerHeight * 0.18 &&
+        window.scrollY > 120;
+      if (!state.menuInPopupZone && inMenuZone && !state.orderPopupDismissed) {
+        showOrderPopup();
+      }
+      state.menuInPopupZone = inMenuZone;
+      toggleBackToTop();
+      ticking = false;
+    });
   }
   window.addEventListener("scroll", onScrollCheck, { passive: true });
   onScrollCheck();
 }
 
+function renderMenu() {
+  const t = getUI();
+  const payload = state.menu;
+  const restaurant = payload.restaurant;
+  const categories = payload.categories;
+  const template = document.getElementById("item-card-template");
+
+  document.getElementById("restaurant-name").textContent = t.heroTitle;
+  document.getElementById("restaurant-description").textContent = t.heroLead;
+
+  document.getElementById("rating").textContent = restaurant.rating_score || "-";
+  document.getElementById("address").textContent = restaurant.address || "-";
+  document.getElementById("phone").textContent = restaurant.phone || "-";
+
+  buildCategoryNav(categories);
+  renderPopularItems(categories);
+  menuRoot.innerHTML = "";
+
+  const sectionsFragment = document.createDocumentFragment();
+  for (let c = 0; c < categories.length; c += 1) {
+    const category = categories[c];
+
+    const section = document.createElement("section");
+    section.className = "category-section";
+    section.id = category.slug || category.id;
+
+    const titleWrap = document.createElement("div");
+    titleWrap.className = "category-title-wrap";
+
+    const title = document.createElement("h3");
+    title.className = "category-title";
+    title.textContent = translateCategoryName(category.name, state.lang);
+
+    const count = document.createElement("p");
+    count.className = "category-count";
+    count.textContent = category.items.length + " " + t.items;
+
+    titleWrap.appendChild(title);
+    titleWrap.appendChild(count);
+    section.appendChild(titleWrap);
+
+    const grid = document.createElement("div");
+    grid.className = "items-grid";
+    const cardsFragment = document.createDocumentFragment();
+
+    for (let i = 0; i < category.items.length; i += 1) {
+      const item = category.items[i];
+      const fragment = template.content.cloneNode(true);
+      const image = fragment.querySelector(".item-image");
+      const price = fragment.querySelector(".price-pill");
+      const name = fragment.querySelector(".item-name");
+      const desc = fragment.querySelector(".item-description");
+
+      name.textContent = translateName(item.name, state.lang);
+      desc.textContent = translateDescription(item.description || "", state.lang) || "-";
+      const displayPrice = getOriginalPriceOverride(item.name, category.name, item.price);
+      price.textContent = formatPrice(displayPrice, state.lang);
+
+      let imageUrl = item.image || item.fallback_image || category.image || restaurant.hero_image;
+      if (normalizeText(category.name).includes("combo")) {
+        imageUrl = item.image || item.fallback_image || "https://imageproxy.wolt.com/assets/692451135898eec529a3994f";
+      }
+      if (imageUrl) {
+        image.src = imageUrl;
+        image.alt = item.name;
+        image.loading = "lazy";
+        image.decoding = "async";
+        image.fetchPriority = "low";
+      } else {
+        image.remove();
+      }
+
+      cardsFragment.appendChild(fragment);
+    }
+    grid.appendChild(cardsFragment);
+    section.appendChild(grid);
+    sectionsFragment.appendChild(section);
+  }
+  menuRoot.appendChild(sectionsFragment);
+}
 function toggleBackToTop() {
   if (!backToTopBtn) return;
   const shouldShow = window.scrollY > 420;
@@ -769,83 +859,6 @@ function renderPopularItems(categories) {
   }
 }
 
-function renderMenu() {
-  const t = getUI();
-  const payload = state.menu;
-  const restaurant = payload.restaurant;
-  const categories = payload.categories;
-  const template = document.getElementById("item-card-template");
-
-  document.getElementById("restaurant-name").textContent = t.heroTitle;
-  document.getElementById("restaurant-description").textContent = t.heroLead;
-
-  document.getElementById("rating").textContent = restaurant.rating_score || "-";
-  document.getElementById("address").textContent = restaurant.address || "-";
-  document.getElementById("phone").textContent = restaurant.phone || "-";
-
-  buildCategoryNav(categories);
-  renderPopularItems(categories);
-  menuRoot.innerHTML = "";
-
-  for (let c = 0; c < categories.length; c += 1) {
-    const category = categories[c];
-
-    const section = document.createElement("section");
-    section.className = "category-section";
-    section.id = category.slug || category.id;
-
-    const titleWrap = document.createElement("div");
-    titleWrap.className = "category-title-wrap";
-
-    const title = document.createElement("h3");
-    title.className = "category-title";
-    title.textContent = translateCategoryName(category.name, state.lang);
-
-    const count = document.createElement("p");
-    count.className = "category-count";
-    count.textContent = category.items.length + " " + t.items;
-
-    titleWrap.appendChild(title);
-    titleWrap.appendChild(count);
-    section.appendChild(titleWrap);
-
-    const grid = document.createElement("div");
-    grid.className = "items-grid";
-
-    for (let i = 0; i < category.items.length; i += 1) {
-      const item = category.items[i];
-      const fragment = template.content.cloneNode(true);
-      const image = fragment.querySelector(".item-image");
-      const price = fragment.querySelector(".price-pill");
-      const name = fragment.querySelector(".item-name");
-      const desc = fragment.querySelector(".item-description");
-
-      name.textContent = translateName(item.name, state.lang);
-      desc.textContent = translateDescription(item.description || "", state.lang) || "-";
-      const displayPrice = getOriginalPriceOverride(item.name, category.name, item.price);
-      price.textContent = formatPrice(displayPrice, state.lang);
-
-      let imageUrl = item.image || item.fallback_image || category.image || restaurant.hero_image;
-      if (normalizeText(category.name).includes("combo")) {
-        imageUrl = item.image || item.fallback_image || "https://imageproxy.wolt.com/assets/692451135898eec529a3994f";
-      }
-      if (imageUrl) {
-        image.src = imageUrl;
-        image.alt = item.name;
-        image.loading = "lazy";
-        image.decoding = "async";
-        image.fetchPriority = "low";
-      } else {
-        image.remove();
-      }
-
-      grid.appendChild(fragment);
-    }
-
-    section.appendChild(grid);
-    menuRoot.appendChild(section);
-  }
-}
 
 function animateElements() {
   const observer = new IntersectionObserver(

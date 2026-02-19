@@ -75,7 +75,10 @@
 
       <div class="top-actions">
         <div class="quick-links">
-          <a id="google-btn" class="quick-link" target="_blank" rel="noopener noreferrer">Google Reviews</a>
+          <a id="google-btn" class="quick-link google-link" target="_blank" rel="noopener noreferrer" aria-label="Google Reviews">
+            <span class="google-g" aria-hidden="true">G</span>
+            <span id="google-btn-label">Google Reviews</span>
+          </a>
           <a
             id="facebook-btn"
             class="quick-link icon-link facebook-icon"
@@ -240,7 +243,7 @@
     <button id="back-to-top" class="back-to-top" aria-label="Back to top">↑</button>
 
     <template id="item-card-template">
-      <article class="item-card reveal">
+      <article class="item-card">
         <div class="item-image-wrap">
           <img class="item-image" alt="" loading="lazy" />
           <span class="price-pill"></span>

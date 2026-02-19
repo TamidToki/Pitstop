@@ -4,7 +4,7 @@ window.__PITSTOP_SITE_CONTENT__ = {
     facebook: "https://www.facebook.com/ravintolapitstop/",
     wolt: "https://wolt.com/en/fin/turku/restaurant/ravintola-pitstop",
     foodora: "https://www.foodora.fi/en/restaurant/r773/pitstop",
-    google_reviews_map: "https://maps.google.com/?q=60.4500427,22.2681028",
+    google_reviews_map: "https://www.google.com/maps/search/?api=1&query=Pitstop+Turku+Aurakatu+3+B",
     google_snippet_index: "https://top-rated.online/cities/Turku/place/p/29006148/Pitstop+Turku"
   },
   hero_media: [
