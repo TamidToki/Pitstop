@@ -41,8 +41,8 @@ const ui = {
     woltBtn: "Order on Wolt",
     heroTop: "TURKU • BURGERS & WOK",
     heroTitle: "Best Wok & Smash Burgers",
-    heroLead: "Freshly made, fast, and full of flavor.",
-    heroExtra: "Quick in central Turku.",
+    heroLead: "Flame-fired wok and smashed burgers, made fresh to order.",
+    heroExtra: "Bold flavor, generous portions, and fast service in central Turku.",
     rating: "Rating",
     address: "Address",
     phone: "Phone",
@@ -78,8 +78,8 @@ const ui = {
     woltBtn: "Tilaa Woltista",
     heroTop: "TURKU • HAMPURILAISET & WOK",
     heroTitle: "Paras wok ja smash-burgerit",
-    heroLead: "Tuoreena, nopeasti ja taynna makua.",
-    heroExtra: "Nopeasti Turun keskustassa.",
+    heroLead: "Liekilla paistettu wok ja smash-burgerit valmistetaan tilauksesta.",
+    heroExtra: "Rohkeat maut, runsaat annokset ja nopea palvelu Turun keskustassa.",
     rating: "Arvosana",
     address: "Osoite",
     phone: "Puhelin",
@@ -115,8 +115,8 @@ const ui = {
     woltBtn: "Bestall via Wolt",
     heroTop: "ABO • BURGARE & WOK",
     heroTitle: "Basta wok och smashburgare",
-    heroLead: "Farskt, snabbt och fullt av smak.",
-    heroExtra: "Snabbt i centrala Abo.",
+    heroLead: "Eldad wok och smashburgare tillagas farskt pa bestallning.",
+    heroExtra: "Starka smaker, generosa portioner och snabb service i centrala Abo.",
     rating: "Betyg",
     address: "Adress",
     phone: "Telefon",
@@ -263,6 +263,7 @@ const state = {
   heroSlideIndex: 0,
   statusTimer: null,
   heroFallbackTimeout: null,
+  heroPlaybackTimer: null,
   orderPopupCloseCount: 0,
   orderPopupDismissed: false,
   menuInPopupZone: false
@@ -528,13 +529,29 @@ function playHeroVideo(video, src) {
   video.muted = true;
   video.playsInline = true;
   video.autoplay = true;
-  video.loop = false;
+  video.loop = true;
   video.preload = "metadata";
   const playPromise = video.play();
   if (playPromise && typeof playPromise.catch === "function") {
     playPromise.catch(function () {
       // Ignore autoplay interruptions on strict browsers.
     });
+  }
+}
+
+function ensureHeroVideosPlaying() {
+  const videos = [heroSlideVideoMain, heroSlideVideoSecondary, heroSlideVideoTertiary];
+  for (let i = 0; i < videos.length; i += 1) {
+    const video = videos[i];
+    if (!video || !video.src) continue;
+    if (video.paused && !video.ended) {
+      const playPromise = video.play();
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(function () {
+          // Ignore autoplay interruptions on strict browsers.
+        });
+      }
+    }
   }
 }
 
@@ -561,6 +578,8 @@ function startHeroSlideshow() {
     setHeroSlide(state.heroSlideIndex + 1);
   };
   setHeroSlide(state.heroSlideIndex);
+  if (state.heroPlaybackTimer) clearInterval(state.heroPlaybackTimer);
+  state.heroPlaybackTimer = setInterval(ensureHeroVideosPlaying, 4000);
 }
 
 function renderAboutAndReviews() {
@@ -919,6 +938,10 @@ function attachEvents() {
   themeToggle.addEventListener("click", function () {
     state.theme = state.theme === "dark" ? "light" : "dark";
     applyTheme();
+  });
+
+  document.addEventListener("visibilitychange", function () {
+    if (!document.hidden) ensureHeroVideosPlaying();
   });
 
   galleryGrid.addEventListener("click", function (event) {

@@ -297,7 +297,7 @@ main {
 }
 
 .hero-copy-top-media {
-  width: min(100%, 170px);
+  width: min(100%, 220px);
   aspect-ratio: 1 / 1;
   margin-bottom: 8px;
   border: 1px solid var(--line);
@@ -1125,7 +1125,7 @@ main {
   }
 
   .hero-copy-top-media {
-    width: min(100%, 128px);
+    display: none;
   }
 
   .menu-panel .panel-head h2 {
