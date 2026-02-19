@@ -3,6 +3,7 @@ const navRoot = document.getElementById("category-nav");
 const hero = document.getElementById("hero");
 const heroSlideVideoMain = document.getElementById("hero-slide-video-main");
 const heroSlideVideoSecondary = document.getElementById("hero-slide-video-secondary");
+const heroSlideVideoTertiary = document.getElementById("hero-slide-video-tertiary");
 const galleryGrid = document.getElementById("gallery-grid");
 const lightbox = document.getElementById("lightbox");
 const lightboxImage = document.getElementById("lightbox-image");
@@ -513,6 +514,7 @@ function updateStaticTexts() {
 function stopHeroVideos() {
   if (heroSlideVideoMain) heroSlideVideoMain.pause();
   if (heroSlideVideoSecondary) heroSlideVideoSecondary.pause();
+  if (heroSlideVideoTertiary) heroSlideVideoTertiary.pause();
   if (state.heroFallbackTimeout) {
     clearTimeout(state.heroFallbackTimeout);
     state.heroFallbackTimeout = null;
@@ -542,9 +544,11 @@ function setHeroSlide(index) {
   state.heroSlideIndex = (index + media.length) % media.length;
   const primary = media[state.heroSlideIndex];
   const secondary = media[(state.heroSlideIndex + 1) % media.length];
+  const tertiary = media[(state.heroSlideIndex + 2) % media.length] || secondary;
   stopHeroVideos();
   playHeroVideo(heroSlideVideoMain, primary.src);
   playHeroVideo(heroSlideVideoSecondary, secondary.src);
+  playHeroVideo(heroSlideVideoTertiary, tertiary.src);
 
   // Fallback in case "ended" event is blocked.
   state.heroFallbackTimeout = setTimeout(function () {
