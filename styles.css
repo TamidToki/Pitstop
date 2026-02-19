@@ -111,6 +111,7 @@ body {
   text-decoration: none;
   color: var(--brand);
   flex-shrink: 0;
+  flex-wrap: nowrap;
 }
 
 .brand-word {
@@ -118,11 +119,13 @@ body {
   font-size: clamp(19px, 2vw, 29px);
   letter-spacing: 0.01em;
   text-transform: none;
+  white-space: nowrap;
+  line-height: 1;
 }
 
 .brand-logo {
   display: block;
-  width: clamp(62px, 7vw, 96px);
+  width: clamp(46px, 5.5vw, 72px);
   height: auto;
   object-fit: contain;
   border-radius: 6px;
@@ -1059,7 +1062,7 @@ main {
   }
 
   .brand-logo {
-    width: min(78px, 14vw);
+    width: min(58px, 11vw);
   }
 
   .theme-toggle,
@@ -1115,12 +1118,13 @@ main {
   }
 
   .brand {
-    width: 100%;
+    width: auto;
+    max-width: 100%;
     justify-content: center;
   }
 
   .brand-word {
-    font-size: 22px;
+    font-size: 20px;
   }
 
   .top-actions {
@@ -1138,7 +1142,7 @@ main {
   }
 
   .brand-logo {
-    width: min(62px, 13vw);
+    width: min(50px, 12vw);
   }
 
   .theme-toggle,
@@ -1189,11 +1193,11 @@ main {
 
 @media (max-width: 620px) {
   .brand-logo {
-    width: min(54px, 16vw);
+    width: min(42px, 14vw);
   }
 
   .brand-word {
-    font-size: 17px;
+    font-size: 16px;
   }
 
   .site-header {
