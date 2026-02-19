@@ -46,7 +46,7 @@ const ui = {
     rating: "Rating",
     address: "Address",
     phone: "Phone",
-    menuTitle: "Ravintola Pitstop Menu Prices with Pictures",
+    menuTitle: "",
     items: "items",
     popularTitle: "Popular Items",
     galleryEyebrow: "PITSTOP FOOD GALLERY",
@@ -83,7 +83,7 @@ const ui = {
     rating: "Arvosana",
     address: "Osoite",
     phone: "Puhelin",
-    menuTitle: "Ravintola Pitstopin hinnat ja kuvat",
+    menuTitle: "",
     items: "tuotetta",
     popularTitle: "Suositut annokset",
     galleryEyebrow: "PITSTOP FOOD GALLERY",
@@ -120,7 +120,7 @@ const ui = {
     rating: "Betyg",
     address: "Adress",
     phone: "Telefon",
-    menuTitle: "Ravintola Pitstop menyer och bilder",
+    menuTitle: "",
     items: "artiklar",
     popularTitle: "Populart",
     galleryEyebrow: "PITSTOP FOOD GALLERY",
@@ -555,29 +555,22 @@ function ensureHeroVideosPlaying() {
   }
 }
 
-function setHeroSlide(index) {
+function setHeroSlide() {
   const media = state.content.hero_media;
   if (!media || media.length === 0) return;
-  state.heroSlideIndex = (index + media.length) % media.length;
-  const primary = media[state.heroSlideIndex];
-  const secondary = media[(state.heroSlideIndex + 1) % media.length];
-  const tertiary = media[(state.heroSlideIndex + 2) % media.length] || secondary;
+  state.heroSlideIndex = 0;
+  const primary = media[0];
+  const secondary = media[1] || primary;
+  const tertiary = media[2] || secondary;
   stopHeroVideos();
   playHeroVideo(heroSlideVideoMain, primary.src);
   playHeroVideo(heroSlideVideoSecondary, secondary.src);
   playHeroVideo(heroSlideVideoTertiary, tertiary.src);
-
-  // Fallback in case "ended" event is blocked.
-  state.heroFallbackTimeout = setTimeout(function () {
-    setHeroSlide(state.heroSlideIndex + 1);
-  }, 42000);
 }
 
 function startHeroSlideshow() {
-  heroSlideVideoMain.onended = function () {
-    setHeroSlide(state.heroSlideIndex + 1);
-  };
-  setHeroSlide(state.heroSlideIndex);
+  if (!heroSlideVideoMain && !heroSlideVideoSecondary && !heroSlideVideoTertiary) return;
+  setHeroSlide();
   if (state.heroPlaybackTimer) clearInterval(state.heroPlaybackTimer);
   state.heroPlaybackTimer = setInterval(ensureHeroVideosPlaying, 4000);
 }
@@ -919,7 +912,7 @@ function rerender() {
   renderLocationSection();
   renderAboutAndReviews();
   renderGallery();
-  setHeroSlide(state.heroSlideIndex);
+  setHeroSlide();
   toggleBackToTop();
   animateElements();
 }

@@ -17,17 +17,17 @@ window.__PITSTOP_SITE_CONTENT__ = {
     },
     {
       type: "video",
-      src: "Assets/AQOXhIf-eI8A5g9HylJMlMsm92U3HSdGlkODt5W4HMOIxzMfzbhjLPD_-TndPUQQxCYRgCT7J5CFaujhVov__f7W1peq2GCtEH4a85PpmcV87A.mp4",
-      caption_en: "Kitchen rhythm, fire, and fast service.",
-      caption_fi: "Keittion rytmia, liekkia ja nopeaa palvelua.",
-      caption_sv: "Koksrytm, eld och snabb service."
+      src: "Assets/AQPzcAHBwN3FrtCLH07Vmc57iQNuTJ2V-4hj4I2_kr66hFJDuue_w_z6u8GbKBF4ZDWpZSnpr1nmDIZHxnD8CayKwJztK4_gYezG_bSF1Mr3Cg.mp4",
+      caption_en: "Loaded wok flavors ready to serve.",
+      caption_fi: "Wokkiannokset valmiina tarjoiltavaksi.",
+      caption_sv: "Wokratter med smak klara for servering."
     },
     {
       type: "video",
-      src: "Assets/AQPzcAHBwN3FrtCLH07Vmc57iQNuTJ2V-4hj4I2_kr66hFJDuue_w_z6u8GbKBF4ZDWpZSnpr1nmDIZHxnD8CayKwJztK4_gYezG_bSF1Mr3Cg.mp4",
-      caption_en: "Pitstop kitchen moments from prep to plate.",
-      caption_fi: "Pitstopin keittiohetkia valmistuksesta tarjoiluun.",
-      caption_sv: "Pitstops koksonblick fran tillagning till servering."
+      src: "Assets/BURGER VIDEO.mp4",
+      caption_en: "Smash burger close-up from the Pitstop grill.",
+      caption_fi: "Smash-burgeri lahikuvassa Pitstopin grillilta.",
+      caption_sv: "Narbild av smashburgare fran Pitstops grill."
     }
   ],
   gallery_images: [
@@ -36,7 +36,9 @@ window.__PITSTOP_SITE_CONTENT__ = {
     "Assets/548359682_122103880197006421_3443645145392154988_n.jpg",
     "Assets/557529263_122113047465006421_269115875181778398_n.jpg",
     "Assets/558963027_122110238223006421_8908147207116748092_n.jpg",
-    "Assets/540975487_122096220711006421_2584087805013933229_n.jpg"
+    "Assets/540975487_122096220711006421_2584087805013933229_n.jpg",
+    "Assets/545846641_122103881145006421_2369625063782544829_n.jpg",
+    "Assets/557881353_122110174641006421_8973102389072605117_n.jpg"
   ],
   location: {
     address_line_1: "Aurakatu 3 B",
