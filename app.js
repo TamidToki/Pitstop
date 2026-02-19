@@ -39,10 +39,10 @@ const ui = {
     facebookBtn: "Facebook",
     foodoraBtn: "Foodora",
     woltBtn: "Order on Wolt",
-    heroTop: "TURKU • BURGERS & WOK",
+    heroTop: "",
     heroTitle: "Best Wok & Smash Burgers",
-    heroLead: "Flame-fired wok and smashed burgers, made fresh to order.",
-    heroExtra: "Bold flavor, generous portions, and fast service in central Turku.",
+    heroLead: "Fresh wok and smash burgers, crafted fast and served hot in central Turku.",
+    heroExtra: "",
     rating: "Rating",
     address: "Address",
     phone: "Phone",
@@ -61,7 +61,7 @@ const ui = {
     aboutFacebook: "ⓕ Pitstop Ravintola",
     reviewsTitle: "Google Reviews",
     reviewsLink: "See all Google reviews",
-    popupTitle: "Order on Wolt",
+    popupTitle: "Order on",
     popupText: "",
     popupBtn: "Order now",
     openNow: "Open now",
@@ -76,10 +76,10 @@ const ui = {
     facebookBtn: "Facebook",
     foodoraBtn: "Foodora",
     woltBtn: "Tilaa Woltista",
-    heroTop: "TURKU • HAMPURILAISET & WOK",
+    heroTop: "",
     heroTitle: "Paras wok ja smash-burgerit",
-    heroLead: "Liekilla paistettu wok ja smash-burgerit valmistetaan tilauksesta.",
-    heroExtra: "Rohkeat maut, runsaat annokset ja nopea palvelu Turun keskustassa.",
+    heroLead: "Tuore wok ja smash-burgerit valmistuvat nopeasti Turun keskustassa.",
+    heroExtra: "",
     rating: "Arvosana",
     address: "Osoite",
     phone: "Puhelin",
@@ -98,7 +98,7 @@ const ui = {
     aboutFacebook: "ⓕ Pitstop Ravintola",
     reviewsTitle: "Google-arvostelut",
     reviewsLink: "Katso kaikki Google-arvostelut",
-    popupTitle: "Tilaa Woltista",
+    popupTitle: "Tilaa",
     popupText: "",
     popupBtn: "Tilaa nyt",
     openNow: "Avoinna nyt",
@@ -113,10 +113,10 @@ const ui = {
     facebookBtn: "Facebook",
     foodoraBtn: "Foodora",
     woltBtn: "Bestall via Wolt",
-    heroTop: "ABO • BURGARE & WOK",
+    heroTop: "",
     heroTitle: "Basta wok och smashburgare",
-    heroLead: "Eldad wok och smashburgare tillagas farskt pa bestallning.",
-    heroExtra: "Starka smaker, generosa portioner och snabb service i centrala Abo.",
+    heroLead: "Farsk wok och smashburgare tillagas snabbt i centrala Abo.",
+    heroExtra: "",
     rating: "Betyg",
     address: "Adress",
     phone: "Telefon",
@@ -135,7 +135,7 @@ const ui = {
     aboutFacebook: "ⓕ Pitstop Ravintola",
     reviewsTitle: "Google-recensioner",
     reviewsLink: "Se alla Google-recensioner",
-    popupTitle: "Bestall via Wolt",
+    popupTitle: "Bestall via",
     popupText: "",
     popupBtn: "Bestall nu",
     openNow: "Oppet nu",
@@ -472,10 +472,14 @@ function updateStaticTexts() {
   document.getElementById("foodora-btn").textContent = t.foodoraBtn;
   document.getElementById("wolt-btn").textContent = t.woltBtn;
 
-  document.getElementById("hero-top").textContent = t.heroTop;
+  const heroTopNode = document.getElementById("hero-top");
+  heroTopNode.textContent = t.heroTop;
+  heroTopNode.style.display = t.heroTop ? "block" : "none";
   document.getElementById("restaurant-name").textContent = t.heroTitle;
   document.getElementById("restaurant-description").textContent = t.heroLead;
-  document.getElementById("hero-extra").textContent = t.heroExtra;
+  const heroExtraNode = document.getElementById("hero-extra");
+  heroExtraNode.textContent = t.heroExtra;
+  heroExtraNode.style.display = t.heroExtra ? "block" : "none";
   document.getElementById("lbl-rating").textContent = t.rating;
   document.getElementById("lbl-address").textContent = t.address;
   document.getElementById("lbl-phone").textContent = t.phone;
@@ -498,8 +502,10 @@ function updateStaticTexts() {
   document.getElementById("google-link").textContent = t.reviewsLink;
   document.getElementById("order-popup-title").textContent = t.popupTitle;
   const popupTextNode = document.getElementById("order-popup-text");
-  popupTextNode.textContent = t.popupText;
-  popupTextNode.style.display = t.popupText ? "inline-flex" : "none";
+  if (popupTextNode) {
+    popupTextNode.textContent = t.popupText;
+    popupTextNode.style.display = t.popupText ? "inline-flex" : "none";
+  }
   document.getElementById("order-popup-link").textContent = t.popupBtn;
   document.getElementById("footer-text").textContent = t.footer;
 
@@ -866,7 +872,9 @@ function renderPopularItems(categories) {
     const body = document.createElement("div");
     body.className = "popular-body";
     const h4 = document.createElement("h4");
-    h4.textContent = translateName(found.item.name, state.lang);
+    const displayName = translateName(found.item.name, state.lang);
+    h4.textContent = displayName;
+    h4.title = displayName;
     const p = document.createElement("p");
     p.textContent = formatPrice(getOriginalPriceOverride(found.item.name, found.category.name, found.item.price), state.lang);
 

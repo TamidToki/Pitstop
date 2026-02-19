@@ -6,7 +6,7 @@
   --shadow-md: 0 14px 35px rgba(0, 0, 0, 0.2);
   --ease: 0.28s ease;
   --order-popup-right: 10px;
-  --order-popup-width: 340px;
+  --order-popup-width: 170px;
 }
 
 body[data-theme="dark"] {
@@ -327,13 +327,13 @@ main {
 }
 
 .hero-copy-spacer {
-  min-height: clamp(48px, 8vw, 116px);
+  min-height: clamp(170px, 20vw, 280px);
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 }
 
 .hero-brand-logo {
-  width: clamp(120px, 18vw, 220px);
+  width: clamp(210px, 28vw, 360px);
   height: auto;
   object-fit: contain;
   opacity: 0.98;
@@ -383,6 +383,10 @@ main {
   text-transform: uppercase;
 }
 
+.hero-top:empty {
+  display: none;
+}
+
 .hero h1 {
   margin: 6px 0 8px;
   font-family: "Rowdies", sans-serif;
@@ -407,6 +411,10 @@ main {
   max-width: 700px;
   font-size: 12px;
   line-height: 1.45;
+}
+
+.hero-extra:empty {
+  display: none;
 }
 
 #hero-slide-video-main,
@@ -546,7 +554,8 @@ main {
   overflow: hidden;
   background: color-mix(in srgb, var(--card) 88%, transparent);
   display: grid;
-  grid-template-rows: 120px minmax(74px, auto);
+  grid-template-rows: 120px minmax(86px, auto);
+  position: relative;
 }
 
 .popular-card img {
@@ -555,24 +564,28 @@ main {
   object-fit: cover;
   object-position: center;
   display: block;
-  transform: scale(1.62);
+  transform: scale(1.74);
   transition: transform var(--ease);
+  position: relative;
+  z-index: 1;
 }
 
 .popular-card:hover img {
-  transform: scale(2.14);
+  transform: scale(2.3);
 }
 
 .popular-body {
   padding: 10px 8px 10px;
-  min-height: 56px;
+  min-height: 68px;
   background: color-mix(in srgb, var(--card) 96%, transparent);
+  position: relative;
+  z-index: 3;
 }
 
 .popular-body h4 {
   margin: 0 0 6px;
-  font-size: 12px;
-  line-height: 1.28;
+  font-size: 11px;
+  line-height: 1.25;
   color: var(--text);
   white-space: normal;
   overflow: visible;
@@ -583,7 +596,7 @@ main {
   margin: 0;
   color: var(--accent);
   font-weight: 700;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .category-link {
@@ -919,8 +932,9 @@ main {
   right: var(--order-popup-right);
   bottom: 14px;
   z-index: 120;
-  width: min(var(--order-popup-width), calc(100vw - 28px));
-  padding: 10px;
+  width: fit-content;
+  max-width: min(var(--order-popup-width), calc(100vw - 28px));
+  padding: 8px;
   border-radius: 14px;
   border: 1px solid var(--line);
   background: color-mix(in srgb, var(--panel) 94%, #000 6%);
@@ -933,9 +947,9 @@ main {
 }
 
 #order-popup-title {
-  margin: 4px 0 6px;
+  margin: 2px 0 6px;
   font-family: "Rowdies", sans-serif;
-  font-size: 18px;
+  font-size: 14px;
 }
 
 #order-popup-text {
@@ -961,24 +975,25 @@ main {
 }
 
 .popup-link {
-  display: inline-flex;
-  align-items: center;
-  font-size: 12px;
-  padding: 8px 11px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 11px;
+  padding: 6px 8px;
   margin-top: 2px;
 }
 
 .order-popup-close {
   position: absolute;
-  top: 6px;
-  right: 7px;
-  width: 30px;
-  height: 30px;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
   border: 1px solid var(--line);
   border-radius: 50%;
   background: rgba(0, 0, 0, 0.52);
   color: #fff;
-  font-size: 19px;
+  font-size: 15px;
   line-height: 1;
   cursor: pointer;
 }
@@ -991,10 +1006,10 @@ main {
   width: 46px;
   height: 46px;
   border: 1px solid color-mix(in srgb, var(--accent) 42%, var(--line));
-  border-radius: 50%;
-  background: radial-gradient(circle at 28% 22%, color-mix(in srgb, var(--accent-strong) 54%, #fff 46%), var(--accent));
-  color: #1e1308;
-  font-size: 22px;
+  clip-path: polygon(10% 0, 90% 0, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0 90%, 0 10%);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-strong) 65%, #fff 35%), var(--accent));
+  color: #261506;
+  font-size: 20px;
   font-weight: 700;
   box-shadow: 0 14px 26px rgba(0, 0, 0, 0.28);
   cursor: pointer;
@@ -1106,7 +1121,7 @@ main {
     justify-self: center;
     width: min(100%, 440px);
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
     gap: 8px;
     order: -1;
@@ -1200,7 +1215,7 @@ main {
   }
 
   .hero-mobile-logo {
-    width: min(72px, 16vw);
+    width: min(84px, 18vw);
   }
 
   .hero-media-pair {
@@ -1277,7 +1292,7 @@ main {
   }
 
   .hero-mobile-logo {
-    width: min(58px, 17vw);
+    width: min(70px, 20vw);
   }
 
   .hero-media-pair {
