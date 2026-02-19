@@ -5,7 +5,7 @@
   --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.34);
   --shadow-md: 0 14px 35px rgba(0, 0, 0, 0.2);
   --ease: 0.28s ease;
-  --order-popup-right: 66px;
+  --order-popup-right: 10px;
   --order-popup-width: 340px;
 }
 
@@ -1170,8 +1170,8 @@ main {
   }
 
   .order-popup {
-    --order-popup-right: 12px;
-    right: 12px;
+    --order-popup-right: 8px;
+    right: 8px;
     bottom: 62px;
   }
 
