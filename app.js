@@ -4,6 +4,7 @@ const hero = document.getElementById("hero");
 const heroSlideVideoMain = document.getElementById("hero-slide-video-main");
 const heroSlideVideoSecondary = document.getElementById("hero-slide-video-secondary");
 const heroSlideVideoTertiary = document.getElementById("hero-slide-video-tertiary");
+const heroSlideVideoTertiaryMobile = document.getElementById("hero-slide-video-tertiary-mobile");
 const galleryGrid = document.getElementById("gallery-grid");
 const lightbox = document.getElementById("lightbox");
 const lightboxImage = document.getElementById("lightbox-image");
@@ -527,6 +528,7 @@ function stopHeroVideos() {
   if (heroSlideVideoMain) heroSlideVideoMain.pause();
   if (heroSlideVideoSecondary) heroSlideVideoSecondary.pause();
   if (heroSlideVideoTertiary) heroSlideVideoTertiary.pause();
+  if (heroSlideVideoTertiaryMobile) heroSlideVideoTertiaryMobile.pause();
   if (state.heroFallbackTimeout) {
     clearTimeout(state.heroFallbackTimeout);
     state.heroFallbackTimeout = null;
@@ -551,7 +553,7 @@ function playHeroVideo(video, src) {
 }
 
 function ensureHeroVideosPlaying() {
-  const videos = [heroSlideVideoMain, heroSlideVideoSecondary, heroSlideVideoTertiary];
+  const videos = [heroSlideVideoMain, heroSlideVideoSecondary, heroSlideVideoTertiary, heroSlideVideoTertiaryMobile];
   for (let i = 0; i < videos.length; i += 1) {
     const video = videos[i];
     if (!video || !video.src) continue;
@@ -577,10 +579,11 @@ function setHeroSlide() {
   playHeroVideo(heroSlideVideoMain, primary.src);
   playHeroVideo(heroSlideVideoSecondary, secondary.src);
   playHeroVideo(heroSlideVideoTertiary, tertiary.src);
+  playHeroVideo(heroSlideVideoTertiaryMobile, tertiary.src);
 }
 
 function startHeroSlideshow() {
-  if (!heroSlideVideoMain && !heroSlideVideoSecondary && !heroSlideVideoTertiary) return;
+  if (!heroSlideVideoMain && !heroSlideVideoSecondary && !heroSlideVideoTertiary && !heroSlideVideoTertiaryMobile) return;
   setHeroSlide();
   if (state.heroPlaybackTimer) clearInterval(state.heroPlaybackTimer);
   state.heroPlaybackTimer = setInterval(ensureHeroVideosPlaying, 4000);
