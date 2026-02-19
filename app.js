@@ -40,16 +40,16 @@ const ui = {
     woltBtn: "Order on Wolt",
     heroTop: "TURKU • BURGERS & WOK",
     heroTitle: "Best Wok & Smash Burgers",
-    heroLead: "Freshly made, fast, full of flavor, and quick in central Turku.",
-    heroExtra: "",
+    heroLead: "Freshly made, fast, and full of flavor.",
+    heroExtra: "Quick in central Turku.",
     rating: "Rating",
     address: "Address",
     phone: "Phone",
     menuTitle: "Ravintola Pitstop Menu Prices with Pictures",
     items: "items",
     popularTitle: "Popular Items",
-    galleryEyebrow: "PITSTOP GALLERY",
-    galleryTitle: "Food Gallery",
+    galleryEyebrow: "PITSTOP FOOD GALLERY",
+    galleryTitle: "Pitstop Food Gallery",
     locationEyebrow: "VISIT PITSTOP",
     locationTitle: "Location & Opening Hours",
     locationStamp: "Hours source: Wolt listing",
@@ -77,16 +77,16 @@ const ui = {
     woltBtn: "Tilaa Woltista",
     heroTop: "TURKU • HAMPURILAISET & WOK",
     heroTitle: "Paras wok ja smash-burgerit",
-    heroLead: "Tuoreena, nopeasti ja taynna makua Turun keskustassa.",
-    heroExtra: "",
+    heroLead: "Tuoreena, nopeasti ja taynna makua.",
+    heroExtra: "Nopeasti Turun keskustassa.",
     rating: "Arvosana",
     address: "Osoite",
     phone: "Puhelin",
     menuTitle: "Ravintola Pitstopin hinnat ja kuvat",
     items: "tuotetta",
     popularTitle: "Suositut annokset",
-    galleryEyebrow: "PITSTOP GALLERIA",
-    galleryTitle: "Ruokagalleria",
+    galleryEyebrow: "PITSTOP FOOD GALLERY",
+    galleryTitle: "Pitstop Food Gallery",
     locationEyebrow: "VIERAILE PITSTOPISSA",
     locationTitle: "Sijainti ja aukioloajat",
     locationStamp: "Aukioloajat lahteesta: Wolt",
@@ -114,16 +114,16 @@ const ui = {
     woltBtn: "Bestall via Wolt",
     heroTop: "ABO • BURGARE & WOK",
     heroTitle: "Basta wok och smashburgare",
-    heroLead: "Farskt, snabbt och fullt av smak i centrala Abo.",
-    heroExtra: "",
+    heroLead: "Farskt, snabbt och fullt av smak.",
+    heroExtra: "Snabbt i centrala Abo.",
     rating: "Betyg",
     address: "Adress",
     phone: "Telefon",
     menuTitle: "Ravintola Pitstop menyer och bilder",
     items: "artiklar",
     popularTitle: "Populart",
-    galleryEyebrow: "PITSTOP GALLERI",
-    galleryTitle: "Matgalleri",
+    galleryEyebrow: "PITSTOP FOOD GALLERY",
+    galleryTitle: "Pitstop Food Gallery",
     locationEyebrow: "BESOK PITSTOP",
     locationTitle: "Plats och oppettider",
     locationStamp: "Oppettider fran: Wolt",
@@ -471,8 +471,10 @@ function updateStaticTexts() {
   document.getElementById("foodora-btn").textContent = t.foodoraBtn;
   document.getElementById("wolt-btn").textContent = t.woltBtn;
 
+  document.getElementById("hero-top").textContent = t.heroTop;
   document.getElementById("restaurant-name").textContent = t.heroTitle;
   document.getElementById("restaurant-description").textContent = t.heroLead;
+  document.getElementById("hero-extra").textContent = t.heroExtra;
   document.getElementById("lbl-rating").textContent = t.rating;
   document.getElementById("lbl-address").textContent = t.address;
   document.getElementById("lbl-phone").textContent = t.phone;
