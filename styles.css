@@ -258,7 +258,7 @@ main {
 
 .hero {
   position: relative;
-  height: clamp(430px, calc(100dvh - 130px), 500px);
+  min-height: 520px;
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid var(--line);
@@ -291,33 +291,9 @@ main {
   min-height: 0;
 }
 
-.hero-copy-top-media {
-  width: min(100%, 228px);
-  aspect-ratio: 16 / 9;
-  height: auto;
-  min-height: 0;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  overflow: hidden;
-  background: color-mix(in srgb, var(--chip) 55%, transparent);
-}
-
-#hero-slide-video-tertiary {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  object-position: center;
-}
-
 .hero-copy-content {
   display: flex;
   flex-direction: column;
-  margin-top: auto;
-}
-
-.hero-extra[hidden] {
-  display: none;
 }
 
 .hero-top {
@@ -341,8 +317,7 @@ main {
   margin: 0;
   color: var(--muted);
   max-width: 820px;
-  font-size: clamp(12px, 1.1vw, 14px);
-  white-space: nowrap;
+  font-size: clamp(13px, 1.45vw, 16px);
 }
 
 .hero-extra {
@@ -366,8 +341,8 @@ main {
 
 .hero-media-grid {
   display: grid;
-  grid-template-columns: minmax(198px, 1fr) minmax(142px, 0.78fr);
-  align-items: center;
+  grid-template-columns: minmax(178px, 1fr) minmax(138px, 0.78fr);
+  align-items: end;
   gap: 10px;
   height: 100%;
 }
@@ -385,12 +360,11 @@ main {
 }
 
 .hero-media-main {
-  max-width: 340px;
+  max-width: 320px;
 }
 
 .hero-media-secondary {
   max-width: 250px;
-  align-self: center;
 }
 
 #hero-slide-video-main,
@@ -1055,17 +1029,11 @@ main {
 
 @media (max-width: 1020px) {
   .hero {
-    height: clamp(450px, calc(100dvh - 120px), 520px);
+    min-height: 520px;
   }
 
   .hero-grid {
     grid-template-columns: 1fr;
-  }
-
-  .hero-copy-top-media {
-    width: min(100%, 260px);
-    aspect-ratio: 16 / 9;
-    height: auto;
   }
 
   .hero-showcase {
@@ -1138,18 +1106,11 @@ main {
   }
 
   .hero {
-    height: clamp(420px, calc(100dvh - 110px), 470px);
+    min-height: 470px;
   }
 
   .hero h1 {
     font-size: clamp(22px, 8.4vw, 30px);
-  }
-
-  .hero-copy-top-media {
-    width: min(100%, 220px);
-    aspect-ratio: 16 / 9;
-    height: auto;
-    min-height: 0;
   }
 
   .menu-panel .panel-head h2 {
