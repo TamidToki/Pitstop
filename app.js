@@ -24,6 +24,16 @@ const mapEmbed = document.getElementById("map-embed");
 const hoursList = document.getElementById("hours-list");
 const openNowNode = document.getElementById("open-now");
 
+function forceStartAtTop() {
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+  window.scrollTo(0, 0);
+  requestAnimationFrame(function () {
+    window.scrollTo(0, 0);
+  });
+}
+
 const categoryLabelMap = {
   Wok: { fi: "Wokit", sv: "Wok" },
   "Smash Burgers": { fi: "Smash-hampurilaiset", sv: "Smashburgare" },
@@ -960,6 +970,10 @@ function attachEvents() {
     if (!document.hidden) ensureHeroVideosPlaying();
   });
 
+  window.addEventListener("pageshow", function () {
+    forceStartAtTop();
+  });
+
   galleryGrid.addEventListener("click", function (event) {
     const trigger = event.target.closest(".gallery-item");
     if (!trigger) return;
@@ -1002,6 +1016,7 @@ function attachEvents() {
 }
 
 async function init() {
+  forceStartAtTop();
   state.menu = await loadMenuData();
   state.content = window.__PITSTOP_SITE_CONTENT__ || null;
 

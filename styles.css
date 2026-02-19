@@ -121,12 +121,19 @@ body {
 }
 
 .brand-word {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35ch;
   font-family: "Playfair Display", serif;
   font-size: clamp(19px, 2vw, 29px);
   letter-spacing: 0.01em;
   text-transform: none;
   white-space: nowrap;
   line-height: 1;
+}
+
+.brand-line {
+  display: inline;
 }
 
 .brand-logo {
@@ -1153,27 +1160,27 @@ main {
   }
 
   .hero-media-pair-wrap {
-    justify-self: center;
-    width: min(100%, 720px);
+    justify-self: start;
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
+    justify-content: flex-start;
+    gap: 5px;
     flex-wrap: nowrap;
     order: -1;
   }
 
   .hero-mobile-logo {
     display: block;
-    width: min(88px, 15vw);
+    width: clamp(46px, 10vw, 74px);
     height: auto;
     object-fit: contain;
   }
 
   .hero-media-pair {
-    width: min(calc(100% - 96px), 610px);
+    width: min(calc(100% - 55px), 640px);
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 6px;
+    gap: 4px;
   }
 
   .hero-media-tertiary-mobile {
@@ -1199,46 +1206,58 @@ main {
 
 @media (max-width: 780px) {
   .site-header {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     overflow: hidden;
-    row-gap: 6px;
-    align-items: center;
-    justify-content: center;
+    row-gap: 0;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 6px;
   }
 
   .brand {
     width: auto;
-    max-width: 100%;
-    justify-content: center;
+    max-width: 120px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 6px;
   }
 
   .brand-word {
-    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    font-size: 14px;
+    line-height: 0.94;
+    white-space: normal;
   }
 
   .top-actions {
-    width: 100%;
-    justify-content: center;
+    width: auto;
+    flex: 1;
+    justify-content: flex-end;
+    align-items: flex-start;
     flex-wrap: wrap;
+    align-content: flex-start;
     gap: 4px;
   }
 
   .quick-links,
   .controls {
+    width: auto;
     flex-wrap: wrap;
     gap: 4px;
-    justify-content: center;
+    justify-content: flex-end;
   }
 
   .brand-logo {
-    width: min(42px, 10vw);
+    width: min(34px, 9vw);
   }
 
   .theme-toggle,
   .quick-link,
   .order-btn {
-    font-size: 10px;
-    padding: 6px 8px;
+    font-size: 9px;
+    padding: 5px 6px;
   }
 
   .icon-link {
@@ -1247,24 +1266,28 @@ main {
   }
 
   .lang-btn {
-    font-size: 10px;
-    min-width: 30px;
-    padding: 6px 7px;
+    font-size: 9px;
+    min-width: 24px;
+    padding: 5px 6px;
   }
 
   .hero-media-pair-wrap {
-    width: min(100%, 540px);
-    gap: 6px;
+    width: 100%;
+    gap: 4px;
   }
 
   .hero-mobile-logo {
-    width: min(74px, 14vw);
+    width: clamp(44px, 10vw, 62px);
   }
 
   .hero-media-pair {
-    width: min(calc(100% - 80px), 450px);
+    width: min(calc(100% - 48px), 470px);
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 5px;
+    gap: 4px;
+  }
+
+  #google-btn-label {
+    display: none;
   }
 
   .popular-items {
@@ -1305,14 +1328,14 @@ main {
   }
 
   .brand-word {
-    font-size: 16px;
+    font-size: 13px;
   }
 
   .site-header {
     gap: 5px;
     padding: 8px;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+    align-items: flex-start;
   }
 
   .hero {
@@ -1329,34 +1352,30 @@ main {
 
   .hero-media-pair-wrap {
     width: 100%;
-    gap: 5px;
+    gap: 3px;
   }
 
   .hero-mobile-logo {
-    width: min(58px, 15vw);
+    width: clamp(40px, 12vw, 54px);
   }
 
   .hero-media-pair {
-    width: min(calc(100% - 62px), 330px);
+    width: min(calc(100% - 44px), 352px);
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 4px;
+    gap: 3px;
   }
 
   .theme-toggle,
   .quick-link,
   .order-btn {
-    font-size: 9px;
-    padding: 5px 7px;
+    font-size: 8.5px;
+    padding: 4px 6px;
   }
 
   .lang-btn {
-    font-size: 9px;
-    min-width: 24px;
-    padding: 5px 6px;
-  }
-
-  #google-btn-label {
-    display: none;
+    font-size: 8px;
+    min-width: 20px;
+    padding: 4px 5px;
   }
 
   .order-popup {
