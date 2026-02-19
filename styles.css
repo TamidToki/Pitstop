@@ -120,6 +120,14 @@ body {
   text-transform: none;
 }
 
+.brand-logo {
+  display: block;
+  width: clamp(150px, 16vw, 230px);
+  height: auto;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
 .top-actions {
   display: flex;
   align-items: center;
@@ -366,6 +374,14 @@ main {
   font-weight: 500;
 }
 
+.hero-about {
+  margin: 2px 0 0;
+  color: var(--muted);
+  max-width: 700px;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
 #hero-slide-video-main,
 #hero-slide-video-secondary,
 #hero-slide-video-tertiary {
@@ -509,12 +525,12 @@ main {
   height: 115px;
   object-fit: cover;
   object-position: center;
-  transform: scale(1.22);
+  transform: scale(1.42);
   transition: transform var(--ease);
 }
 
 .popular-card:hover img {
-  transform: scale(1.45);
+  transform: scale(1.78);
 }
 
 .popular-body {
@@ -735,7 +751,7 @@ main {
 .info-grid {
   margin-top: 16px;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: 14px;
 }
 
@@ -1017,8 +1033,8 @@ main {
 }
 
 @media (max-width: 1180px) {
-  .brand-word {
-    font-size: 26px;
+  .brand-logo {
+    width: min(200px, 38vw);
   }
 
   .theme-toggle,
@@ -1092,8 +1108,8 @@ main {
     justify-content: center;
   }
 
-  .brand-word {
-    font-size: 22px;
+  .brand-logo {
+    width: min(180px, 62vw);
   }
 
   .theme-toggle,
@@ -1123,6 +1139,11 @@ main {
     white-space: normal;
   }
 
+  .hero-about {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
   .info-grid {
     grid-template-columns: 1fr;
   }
@@ -1134,8 +1155,8 @@ main {
 }
 
 @media (max-width: 620px) {
-  .brand-word {
-    font-size: 17px;
+  .brand-logo {
+    width: min(148px, 64vw);
   }
 
   .site-header {

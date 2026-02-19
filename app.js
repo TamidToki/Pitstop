@@ -450,7 +450,6 @@ function bindLinks() {
   document.getElementById("foodora-btn").href = sources.foodora;
   document.getElementById("wolt-btn").href = sources.wolt;
 
-  document.getElementById("about-facebook-link").href = sources.facebook;
   document.getElementById("google-link").href = sources.google_reviews_map;
   document.getElementById("map-link").href = sources.google_reviews_map;
   orderPopupLink.href = sources.wolt;
@@ -495,7 +494,6 @@ function updateStaticTexts() {
   document.getElementById("map-link").textContent = t.mapLink;
   document.getElementById("call-link").textContent = t.callLink;
 
-  document.getElementById("about-facebook-link").textContent = t.aboutFacebook;
   document.getElementById("reviews-title").textContent = t.reviewsTitle;
   document.getElementById("google-link").textContent = t.reviewsLink;
   document.getElementById("order-popup-title").textContent = t.popupTitle;
@@ -580,10 +578,8 @@ function renderAboutAndReviews() {
   const about = state.content.about[state.lang];
   const reviewsBlock = state.content.google_reviews;
 
-  document.getElementById("about-title").textContent = about.title;
-  document.getElementById("about-p1").textContent = about.p1;
-  document.getElementById("about-p2").textContent = about.p2;
-  document.getElementById("facebook-stats").textContent = about.facebook_stats;
+  document.getElementById("hero-about-p1").textContent = about.p1;
+  document.getElementById("hero-about-p2").textContent = about.p2;
 
   document.getElementById("google-rating").textContent =
     reviewsBlock.rating.toFixed(1) + " / 5 (" + reviewsBlock.count + ")";
