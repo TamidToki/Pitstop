@@ -1158,32 +1158,29 @@ main {
     grid-template-columns: 1fr;
     align-items: stretch;
     gap: 10px;
+    padding: 10px;
   }
 
   .hero-media-pair-wrap {
-    justify-self: start;
+    justify-self: stretch;
     width: 100%;
-    display: flex;
+    display: grid;
+    grid-template-columns: clamp(38px, 11vw, 62px) minmax(0, 1fr);
     align-items: center;
-    justify-content: flex-start;
-    gap: 5px;
-    flex-wrap: nowrap;
+    gap: 4px;
     order: -1;
     overflow: visible;
   }
 
   .hero-mobile-logo {
     display: block;
-    flex: 0 0 clamp(46px, 10vw, 74px);
-    width: clamp(46px, 10vw, 74px);
+    width: 100%;
     height: auto;
     object-fit: contain;
   }
 
   .hero-media-pair {
-    flex: 1 1 auto;
-    width: auto;
-    max-width: none;
+    width: 100%;
     min-width: 0;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 4px;
@@ -1215,7 +1212,7 @@ main {
     flex-wrap: nowrap;
     overflow: hidden;
     row-gap: 0;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     gap: 6px;
   }
@@ -1224,7 +1221,7 @@ main {
     width: auto;
     max-width: 120px;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     gap: 6px;
   }
 
@@ -1241,9 +1238,9 @@ main {
     width: auto;
     flex: 1;
     justify-content: flex-end;
-    align-items: flex-start;
+    align-items: center;
     flex-wrap: wrap;
-    align-content: flex-start;
+    align-content: center;
     gap: 4px;
   }
 
@@ -1280,19 +1277,18 @@ main {
   .hero-media-pair-wrap {
     width: 100%;
     gap: 4px;
+    grid-template-columns: clamp(36px, 10vw, 54px) minmax(0, 1fr);
   }
 
   .hero-mobile-logo {
-    flex: 0 0 clamp(44px, 10vw, 62px);
-    width: clamp(44px, 10vw, 62px);
+    width: 100%;
   }
 
   .hero-media-pair {
-    flex: 1 1 auto;
-    width: auto;
+    width: 100%;
     min-width: 0;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 4px;
+    gap: 3px;
   }
 
   #google-btn-label {
@@ -1306,11 +1302,27 @@ main {
   .hero-lead,
   .hero-extra {
     white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .hero-about {
     font-size: 11px;
     line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
+
+  .hero-metrics {
+    max-width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero-metrics .metric-box:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .metric-box strong {
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 
   .hero-brand-logo {
@@ -1344,7 +1356,7 @@ main {
     gap: 5px;
     padding: 8px;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
   }
 
   .hero {
@@ -1362,19 +1374,18 @@ main {
   .hero-media-pair-wrap {
     width: 100%;
     gap: 3px;
+    grid-template-columns: clamp(32px, 11vw, 46px) minmax(0, 1fr);
   }
 
   .hero-mobile-logo {
-    flex: 0 0 clamp(40px, 12vw, 54px);
-    width: clamp(40px, 12vw, 54px);
+    width: 100%;
   }
 
   .hero-media-pair {
-    flex: 1 1 auto;
-    width: auto;
+    width: 100%;
     min-width: 0;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 3px;
+    gap: 2px;
   }
 
   .theme-toggle,
@@ -1388,6 +1399,18 @@ main {
     font-size: 8px;
     min-width: 20px;
     padding: 4px 5px;
+  }
+
+  .hero h1 {
+    font-size: clamp(19px, 7.8vw, 26px);
+  }
+
+  .hero-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-metrics .metric-box:last-child {
+    grid-column: auto;
   }
 
   .order-popup {
