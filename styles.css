@@ -1164,8 +1164,7 @@ main {
   .hero-media-pair-wrap {
     justify-self: stretch;
     width: 100%;
-    display: grid;
-    grid-template-columns: clamp(38px, 11vw, 62px) minmax(0, 1fr);
+    display: block;
     align-items: center;
     gap: 4px;
     order: -1;
@@ -1173,8 +1172,7 @@ main {
   }
 
   .hero-mobile-logo {
-    display: block;
-    width: 100%;
+    display: none;
     height: auto;
     object-fit: contain;
   }
@@ -1277,11 +1275,11 @@ main {
   .hero-media-pair-wrap {
     width: 100%;
     gap: 4px;
-    grid-template-columns: clamp(36px, 10vw, 54px) minmax(0, 1fr);
+    display: block;
   }
 
   .hero-mobile-logo {
-    width: 100%;
+    display: none;
   }
 
   .hero-media-pair {
@@ -1374,11 +1372,11 @@ main {
   .hero-media-pair-wrap {
     width: 100%;
     gap: 3px;
-    grid-template-columns: clamp(32px, 11vw, 46px) minmax(0, 1fr);
+    display: block;
   }
 
   .hero-mobile-logo {
-    width: 100%;
+    display: none;
   }
 
   .hero-media-pair {
